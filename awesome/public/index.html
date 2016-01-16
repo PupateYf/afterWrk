@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no">
+    <title>下班后</title>
+    
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script src="components/angular/angular.min.js"></script>
+    <script src="components/angular-route/angular-route.min.js"></script>
+    <script src="components/angular-animate/angular-animate.min.js"></script>
+    <script src="components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="components/fastclick/lib/fastclick.js"></script>
+    
+  	
+    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="components/bootstrap-additions/dist/bootstrap-additions.min.css">
+  	<link rel="stylesheet" type="text/css" href="components/angular-motion/dist/angular-motion.min.css">
+
+
+  </head>
+  <body ng-app="ace">
+  	<div ng-view></div>
+  </body>
+  <script src='js/AppConfig.js'></script>
+  <script src='js/modules/ace.routes.js'></script>
+  <script src='js/modules/ace.index.js'></script>
+  <script src='js/modules/ace.login.js'></script>
+  <script>
+  //自适应模块
+/*  (function () {
+      $.fn.fontAdapt = function (opts) {  
+        var defaults = {
+          // 容器最大宽度,[number]
+          maxW: 640,  //750
+
+          // 容器最小宽度,[number]
+          minW: 320,
+
+          // 容器在宽度最大时的字体大小,[number]
+          maxFs: 85.33333333333334 //100
+
+        }
+        defaults = $.extend({}, defaults, opts);
+
+        // 最小宽度时的字体大小
+        defaults.minFs = defaults.maxFs * defaults.minW/defaults.maxW;
+
+        $.each(this, function() { 
+
+          // 按比例的字体大小
+          var fs = $(window).width()/defaults.maxW * defaults.maxFs;
+
+          // 处理最大，最小字体边界
+          fs = fs > defaults.maxFs ? defaults.maxFs : (fs < defaults.minFs ? defaults.minFs : fs );
+          $(this).css('font-size', fs);
+        });
+      }
+    $box = $(document.documentElement);
+    $box.fontAdapt();
+    $(window).on('resize', function (){
+      $box.fontAdapt();
+    });
+  })();*/
+  </script>
+</html>
