@@ -8,7 +8,7 @@ var config = {
 	mysql : {
 		host : 'localhost',
 		user : 'root',
-		password : 'beyourself',
+		password : '123456',
 		database : 'awesome',
 		port : 3306
 	}

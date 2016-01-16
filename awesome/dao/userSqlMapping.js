@@ -5,7 +5,7 @@
  * @date 2015-12-24
  */
 var user = {
-	insert : 'INSERT INTO user(id,password) VALUES(?,?)',
+	insert : 'INSERT INTO user(id,password,whenIn) VALUES(?,?,?)',
 	update : 'update user set xxx = ? where id = ?',
 	delete : 'delete from user where id = ?',
 	queryById : 'select * from user where id = ?',

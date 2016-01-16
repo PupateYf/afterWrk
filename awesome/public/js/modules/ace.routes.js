@@ -14,6 +14,10 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
         templateUrl : 'js/modules/html/index.html',
         controller  : 'indexController'
     })
+    .when('/sponsor', {
+        templateUrl : 'js/modules/html/sponsor.html',
+        controller  : 'sponsorController' 	
+    })
     .otherwise({  
         redirectTo: '/'  
     });
