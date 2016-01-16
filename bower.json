@@ -1,0 +1,31 @@
+{
+  "name": "afterWrk",
+  "description": "I hope there is no bug",
+  "main": "",
+  "moduleType": [],
+  "authors": [
+    "PupateYf"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "awesome/public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-motion": "~0.4.3",
+    "angular-sanitize": "~1.4.8",
+    "angular": "angularjs#~1.4.8",
+    "bootstrap-additions": "~0.3.1",
+    "bootstrap": "~3.3.6",
+    "fastclick": "~1.0.6",
+    "jquery": "~2.1.4",
+    "angular-strap": "~2.3.6"
+  }
+}
