@@ -6,7 +6,7 @@ var browserSync = require('browser-sync').create();
 gulp.task('browser-sync', function() {
     browserSync.init({
     	files: "**",
-        proxy: "192.168.136.141:3000"
+        proxy: "127.0.0.1:3000"
     });
 });
 

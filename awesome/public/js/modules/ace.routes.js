@@ -14,11 +14,15 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
         templateUrl : 'js/modules/html/index.html',
         controller  : 'indexController'
     })
+		.when('/loginSignUp', {
+				templateUrl : 'js/modules/html/loginSignUp.html',
+				controller 	: 'loginSignUpController'
+		})
     .when('/sponsor', {
         templateUrl : 'js/modules/html/sponsor.html',
-        controller  : 'sponsorController' 	
+        controller  : 'sponsorController'
     })
-    .otherwise({  
-        redirectTo: '/'  
+    .otherwise({
+        redirectTo: '/'
     });
 }]);

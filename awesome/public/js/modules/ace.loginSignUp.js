@@ -4,19 +4,14 @@ var aceLoginSignUp = angular.module('ace.loginSignUp');
 
 aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function ($scope, $http) {
 	//UI
-	$scope.flag = true
-
-	$scope.oContent = {
-	  "title": "Login",
-	  "title2": "Sign up"
-	};
+	$scope.showLogin = true;
 	//ajax param init
-	$scope.formData = {
-		id : "",
+	$scope.loginData = {
+		account : "",
 		password : ""
 	}
-	$scope.formData2 = {
-		id : "",
+	$scope.signupData = {
+		account : "",
 		password : "",
 		confirm : ""
 	}
@@ -29,12 +24,12 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 		if(str == 'login'){
 			$.extend($scope.oAjaxConfig,{
 				url : '/users/login',
-				data : $scope.formData
+				data : $scope.loginData
 			});
 		} else {
 			$.extend($scope.oAjaxConfig,{
 				url : '/users/signup',
-				data : $scope.formData2
+				data : $scope.signupData
 			});
 		}
 		// $scope.oFormData = new FormData(form);
@@ -45,9 +40,9 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 	//change login or signup
 	$scope.fnChange = function (i) {
 		if(i == 1) {
-			$scope.flag = true;
+			$scope.showLogin = true;
 		} else {
-			$scope.flag = false;
+			$scope.showLogin = false;
 		}
 	}
 

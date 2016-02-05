@@ -26,6 +26,7 @@
     "bootstrap": "~3.3.6",
     "fastclick": "~1.0.6",
     "jquery": "~2.1.4",
-    "angular-strap": "~2.3.6"
+    "angular-strap": "~2.3.6",
+    "font-awesome": "^4.5.0"
   }
 }
