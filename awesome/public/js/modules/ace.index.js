@@ -8,6 +8,6 @@ AppConfig.registerModule('ace.index');
 
 var aceIndex = angular.module('ace.index');
 
-aceIndex.controller('indexController', ['$scope', function ($scope) {
-
+aceIndex.controller('indexController', ['$scope', '$rootScope', function ($scope,$rootScope) {
+    
 }])

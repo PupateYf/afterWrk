@@ -14,6 +14,10 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
         templateUrl : 'js/modules/html/index.html',
         controller  : 'indexController'
     })
+		.when('/index', {
+				templateUrl : 'js/modules/html/index.html',
+				controller	: 'indexController'
+		})
 		.when('/loginSignUp', {
 				templateUrl : 'js/modules/html/loginSignUp.html',
 				controller 	: 'loginSignUpController'
