@@ -1,6 +1,0 @@
-CREATE TABLE user(
-   id char(11),
-   password char(20) not null,
-   whenIn char(50),
-   PRIMARY KEY(id)
-);

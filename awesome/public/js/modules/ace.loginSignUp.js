@@ -15,6 +15,8 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 		password : "",
 		confirm : ""
 	}
+	// error message
+	$scope.errorMsg = '';
 	// $scope.oFormData = null;
 	$scope.oAjaxConfig = {
 		method : 'POST',
@@ -33,9 +35,24 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 			});
 		}
 		// $scope.oFormData = new FormData(form);
-		$http($scope.oAjaxConfig).success(function(data,header,config,status){
-			console.log('ok');
-		});
+		$http($scope.oAjaxConfig)
+		.then(function (data) {
+			var data = data.data;
+			switch (data.code) {
+      	case 1: {
+					console.log(data.msg);
+					window.location.hash = '#/index';
+					break;
+				}
+				default: {
+					console.log(data.msg);
+					$scope.errorMsg = data.msg;
+					break;
+				}
+      }
+		},function (err) {
+			 console.log(err);
+		})
 	}
 	//change login or signup
 	$scope.fnChange = function (i) {
@@ -45,6 +62,4 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 			$scope.showLogin = false;
 		}
 	}
-
-
 }])

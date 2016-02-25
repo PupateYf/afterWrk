@@ -3,7 +3,7 @@
     section{position: absolute;padding: 0 1rem;top: 8.1rem;transform: translateY(-50%);}
     .fixWidth{width:.3rem}
     .input-margin{margin:.3rem 0}
-
+    .error-show{margin: 0;padding: .1rem .2rem;margin-top: .5rem;}
 </style>
 
 
@@ -12,16 +12,21 @@
     <img src="image/banner.jpg">
 </header>
 <!-- 登陆 -->
+
 <section>
+    <div class="alert alert-danger error-show" role="alert" ng-show='errorMsg'>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{errorMsg}}
+    </div>
     <form ng-if="showLogin">
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-user fixWidth"></span></div>
-          <input type="tel" class="form-control" id="account" ng-module="loginData.account" placeholder="您的账号">
+          <input type="tel" class="form-control" ng-model="loginData.account" placeholder="您的账号">
         </div>
-
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-lock fixWidth"></span></div>
-          <input type="password" class="form-control" id="password" ng-module="loginData.password" placeholder="请输入密码">
+          <input type="password" class="form-control" ng-model="loginData.password" placeholder="请输入密码">
         </div>
         <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('login')">马上登陆</button>
         <a href="javascript:;" class="pull-right" ng-click="fnChange(2)">马上注册</a>
@@ -31,19 +36,20 @@
     <form ng-if="!showLogin">
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-user fixWidth"></span></div>
-          <input type="tel" class="form-control" id="saccount" ng-module="signupData.account" placeholder="您的账号">
+          <input type="tel" class="form-control" ng-model="signupData.account" placeholder="您的账号">
         </div>
 
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-lock fixWidth"></span></div>
-          <input type="password" class="form-control" id="spassword" ng-module="signupData.password" placeholder="请输入密码">
+          <input type="password" class="form-control" ng-model="signupData.password" placeholder="请输入密码">
         </div>
 
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-lock fixWidth"></span></div>
-          <input type="password" class="form-control" id="scpassword" ng-module="signupData.password" placeholder="再次输入密码">
+          <input type="password" class="form-control" ng-model="signupData.confirm" placeholder="再次输入密码">
         </div>
         <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('signup')">注册</button>
         <a href="javascript:;" class="pull-right" ng-click="fnChange(1)">已有账号？</a>
     </form>
+
 </section>

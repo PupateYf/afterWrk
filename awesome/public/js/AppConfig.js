@@ -21,7 +21,7 @@
     }();
 
     angular.module('ace', AppConfig.appModuleVendorDependencies);
-    
+
     // @alias fastclick.js
     angular.module('ace').run(function() {
       FastClick.attach(document.body);
