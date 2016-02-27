@@ -7,7 +7,7 @@
 (function() {
     window.AppConfig = function() {
         var appModuleName = 'ace',
-            appModuleVendorDependencies = ['ngAnimate','ngSanitize','mgcrea.ngStrap'],
+            appModuleVendorDependencies = ['ngAnimate','ngSanitize','mgcrea.ngStrap','angularFileUpload'],
             registerModule = function(reg) {
                 angular.module(reg, []);
                 angular.module(appModuleName).requires.push(reg);

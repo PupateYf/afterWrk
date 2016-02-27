@@ -22,5 +22,8 @@ router.post('/checkLogin', function (req, res, next) {
 	userDao.checkLogin(req, res, next);
 })
 
+router.post('/getValidCode', function (req, res, next) {
+	userDao.getValidCode(req, res, next);
+})
 
 module.exports = router;

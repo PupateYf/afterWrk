@@ -7,8 +7,8 @@
 
 var	sqlite3 = require('sqlite3').verbose(),
 		$util = require('../util/util'),
-		DBname = require('../DB/DBConfig').name;
-
+		DBname = require('../DB/DBConfig').name,
+		Alidayu = require('alidayujs');
 
 
 var $sql = {
@@ -120,6 +120,7 @@ module.exports = {
 				}
 			});
 		},
+	// 通过cookie判断是否已经登陆
   checkLogin : function (req, res, next) {
 		 // get cookies
 		 var param = req.cookies;
@@ -163,6 +164,43 @@ module.exports = {
 	 			}
 	 			db.close();
 	 		});
-
+	},
+	// 获取验证码
+	getValidCode : function (req, res, next) {
+		var config = {
+        app_key: '23317675',
+        secret: '850a9493c7aa141871699f32f03023b8'
+    };
+    var alidayu = new Alidayu(config);
+    var options = {
+        sms_free_sign_name: '注册验证',
+        sms_param: {
+	        code: '7821',
+	        product: '【下班后beta】内测',
+        },
+        rec_num: '13580353945',
+        sms_template_code: 'SMS_5245254',
+    };
+    //发送短信
+    alidayu.sms(options,function(data){
+				var json = JSON.parse(data);
+				console.log(data);
+        if(json.hasOwnProperty("alibaba_aliqin_fc_sms_num_send_response")){
+					 if(json["alibaba_aliqin_fc_sms_num_send_response"].result.success){
+						 // 成功
+	 					var result = {
+	 						 code : 1,
+	 						 msg : 'valid code request successfully'
+	 					}
+	 					$util.jsonWrite(res, result);
+					 }
+				} else {
+					var result = {
+						 code : 0,
+						 msg : 'valid code request fail'
+					}
+					$util.jsonWrite(res, result);
+				}
+    });
 	}
 }

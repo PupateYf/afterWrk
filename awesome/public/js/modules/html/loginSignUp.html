@@ -4,6 +4,7 @@
     .fixWidth{width:.3rem}
     .input-margin{margin:.3rem 0}
     .error-show{margin: 0;padding: .1rem .2rem;margin-top: .5rem;}
+    .validDisable{color:#B1B1B1}
 </style>
 
 
@@ -45,8 +46,9 @@
         </div>
 
         <div class="input-group input-margin">
-          <div class="input-group-addon"><span class="fa fa-lock fixWidth"></span></div>
-          <input type="password" class="form-control" ng-model="signupData.confirm" placeholder="再次输入密码">
+
+          <input type="password" class="form-control" ng-model="signupData.confirm" maxlength="4" placeholder="验证码">
+          <div class="input-group-addon" ng-click="fnLockValidCode()" ng-class="{'validDisable' : lockValidTime != 60}"><span class="fa fa-paper-plane fixWidth"></span> {{validCode}}</div>
         </div>
         <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('signup')">注册</button>
         <a href="javascript:;" class="pull-right" ng-click="fnChange(1)">已有账号？</a>

@@ -1,8 +1,27 @@
 <style>
 body{background-color:#f5f5f5}
+.active_banner{text-align: center}
+.active-upload-img{position: absolute;opacity: 0;width: 100%;height: 4.5rem;z-index: 999;}
+.active-add-img{display:block;color:#cacaca;position: relative;width:100%;height:4.5rem;border: .1rem dashed;border-radius: .3rem}
+a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
+.active-add-img .tips-holder{transform: translate(-50%,-50%);position: absolute;top: 50%;left: 50%;}
+.active-add-img .tips-holder span{float: left}
+.active-add-img .tips-holder span.icon:before{font-size:1rem;height:1rem;}
+.active-add-img .tips-holder span.font{display:inline-block;height:1rem;font-size:.5rem;line-height:1rem}
+.img-canvas{position: absolute;top: 0;}
+
 </style>
 <section>
     <div class="active_banner">
-        <a href="javascript:;">点击添加图片</a>
+        <input type="file" class="active-upload-img" nv-file-select="" uploader="uploader"/>
+        <a id="add-img" href="javascript:;" class="active-add-img">
+          <div class="tips-holder">
+            <span class="icon fa fa-plus">
+            </span><span class="font">添加封面图</span>
+          </div>
+        </a>
+        <div ng-repeat="item in uploader.queue" class="img-canvas">
+          <div ng-picupload="{ file: item._file}" ng-show="uploader.isHTML5"></div>
+        </div>
     </div>
 </section>

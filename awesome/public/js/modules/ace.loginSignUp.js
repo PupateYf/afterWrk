@@ -4,7 +4,11 @@ var aceLoginSignUp = angular.module('ace.loginSignUp');
 
 aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function ($scope, $http) {
 	//UI
-	$scope.showLogin = true;
+	$scope.showLogin = false;
+
+	$scope.validCode = $scope.rawValidCode = "  获取验证码 ";
+	$scope.msnReq = true;
+	$scope.lockValidTime = 60;
 	//ajax param init
 	$scope.loginData = {
 		account : "",
@@ -61,5 +65,33 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 		} else {
 			$scope.showLogin = false;
 		}
+	}
+
+	// get validCode
+	$scope.fnLockValidCode = function () {
+		if($scope.lockValidTime !== 60) return;
+		if($scope.msnReq){
+			$scope.msnReq = false;
+			$http({
+				method: 'POST',
+				url: '/users/getValidCode'
+			}).then(function (result) {
+				console.log(result.data.msg);
+			},function (err) {console.log(err)})
+		}
+		var setTime = function (){
+			if ( $scope.lockValidTime == 0) {
+				clearInterval(count);
+				$scope.validCode = $scope.rawValidCode;
+				$scope.lockValidTime = 60;
+				$scope.msnReq = true;
+			} else {
+				$scope.validCode = " 重新发送(" + $scope.lockValidTime + ")";
+				console.log($scope.validCode);
+				$scope.lockValidTime--;
+			}
+			$scope.$digest();
+		}
+		var count = setInterval(function(){setTime()}, 1000)
 	}
 }])

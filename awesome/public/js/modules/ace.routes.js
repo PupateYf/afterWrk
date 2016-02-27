@@ -19,7 +19,8 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
 				controller	: 'indexController'
 		})
 		.when('/createActive', {
-				templateUrl : 'js/modules/html/createActive.html'
+				templateUrl : 'js/modules/html/createActive.html',
+				controller  : 'activeController'
 		})
 		.when('/loginSignUp', {
 				templateUrl : 'js/modules/html/loginSignUp.html',
