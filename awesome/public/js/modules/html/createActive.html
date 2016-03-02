@@ -10,6 +10,7 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
 .active-add-img .tips-holder span.font{display:inline-block;height:1rem;font-size:.5rem;line-height:1rem}
 .img-canvas{position: absolute;top: 0;}
 
+.active_details .title{display:block;text-align:center;color:#cacaca;font-weight:bold;margin-top:.5rem}
 </style>
 <section>
     <div class="active_banner">
@@ -24,4 +25,73 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
           <div ng-picupload="{ file: item._file}" ng-show="uploader.isHTML5"></div>
         </div>
     </div>
+    <div class="active_details">
+        <span class="title">类型 Kind</span>
+        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" >聚餐</button>
+          <button type="button" class="btn btn-default" >运动</button>
+          <button type="button" class="btn btn-default" >聚会</button>
+          <button type="button" class="btn btn-default" >学习</button>
+        </div>
+
+        <span class="title">主题 Topic</span>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">@</span>
+          <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <span class="title">时间 Time</span>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">@</span>
+          <input type="datetime" class="form-control" name="datetime">
+        </div>
+
+        <span class="title">集合点 Location</span>
+        <button type="button" class="btn btn-lg btn-success" data-template-url="js/modules/html/selectLocation.html" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body" >location
+          <br>
+        </button>
+
+
+        <span class="title">邀请对象 Gender</span>
+        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" >聚餐</button>
+          <button type="button" class="btn btn-default" >运动</button>
+          <button type="button" class="btn btn-default" >聚会</button>
+        </div>
+
+        <span class="title">邀请人数 Count</span>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">@</span>
+          <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <span class="title">活动简介 Profile</span>
+
+        <textarea class="form-control" rows="3"></textarea>
+
+        <span class="title">联系人 Contacts</span>
+        <div>
+          <div class="input-group">
+            <label class="sr-only" for="exampleInputEmail3">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+          </div>
+          <div class="input-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+          </div>
+        </div>
+
+        <span class="title">预估费用 Cost</span>
+        <div>
+          <div class="input-group">
+            <label class="sr-only" for="exampleInputEmail3">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+          </div>
+          <div class="input-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+          </div>
+        </div>
+    </div>
+    <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('signup')" ng-sbchck>发 布</button>
 </section>

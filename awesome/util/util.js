@@ -16,6 +16,15 @@ module.exports = {
       res.json(ret);
     }
   },
+  createRamdon : function () {
+      var charactors="0123456789";
+      var value='',i;
+      for(j=1;j<=4;j++){
+        i = parseInt(10*Math.random()); 　
+        value = value + charactors.charAt(i);
+      }
+      return value;
+  },
   extend : function() {
       var options, name, src, copy, copyIsArray, clone, target = arguments[0] || {},
           i = 1,

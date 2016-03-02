@@ -23,11 +23,11 @@
     <form ng-if="showLogin">
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-user fixWidth"></span></div>
-          <input type="tel" class="form-control" ng-model="loginData.account" placeholder="您的账号">
+          <input type="tel" class="form-control" ng-model="loginData.account" placeholder="您的账号" ng-rsterr>
         </div>
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-lock fixWidth"></span></div>
-          <input type="password" class="form-control" ng-model="loginData.password" placeholder="请输入密码">
+          <input type="password" class="form-control" ng-model="loginData.password" placeholder="请输入密码" ng-rsterr>
         </div>
         <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('login')">马上登陆</button>
         <a href="javascript:;" class="pull-right" ng-click="fnChange(2)">马上注册</a>
@@ -37,20 +37,20 @@
     <form ng-if="!showLogin">
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-user fixWidth"></span></div>
-          <input type="tel" class="form-control" ng-model="signupData.account" placeholder="您的账号">
+          <input type="tel" class="form-control" ng-model="signupData.account" placeholder="您的账号" ng-rsterr>
         </div>
 
         <div class="input-group input-margin">
           <div class="input-group-addon"><span class="fa fa-lock fixWidth"></span></div>
-          <input type="password" class="form-control" ng-model="signupData.password" placeholder="请输入密码">
+          <input type="password" class="form-control" ng-model="signupData.password" placeholder="请输入密码" ng-rsterr>
         </div>
 
         <div class="input-group input-margin">
 
-          <input type="password" class="form-control" ng-model="signupData.confirm" maxlength="4" placeholder="验证码">
-          <div class="input-group-addon" ng-click="fnLockValidCode()" ng-class="{'validDisable' : lockValidTime != 60}"><span class="fa fa-paper-plane fixWidth"></span> {{validCode}}</div>
+          <input type="password" class="form-control" ng-model="signupData.validCode" maxlength="4" placeholder="验证码" ng-rsterr>
+          <div class="input-group-addon" ng-click="fnLockValidCode()" ng-class="{'validDisable' : lockValidTime != 60}" ng-sbchck><span class="fa fa-paper-plane fixWidth"></span> {{validCode}}</div>
         </div>
-        <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('signup')">注册</button>
+        <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubmit('signup')" ng-sbchck>注册</button>
         <a href="javascript:;" class="pull-right" ng-click="fnChange(1)">已有账号？</a>
     </form>
 

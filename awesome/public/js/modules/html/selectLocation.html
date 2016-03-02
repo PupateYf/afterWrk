@@ -1,5 +1,5 @@
 
-<div class="aside left am-slide-left" tabindex="-1" role="dialog" style="display:block; width:100%">
+<div class="aside left am-slide-left" tabindex="-1" role="dialog" style="display:block; width:100%" ng-controller="sponsorController">
   <div class="aside-dialog">
     <div class="aside-content">
       <div class="aside-header" ng-show="oContent.map">
@@ -15,21 +15,22 @@
           <div id="{{oContent.map.id}}">
             {{fnInitMap()}}
             {{fnMapListenClick()}}
-          </div> 
+          </div>
     </div>
   </div>
-<style type="text/css">
+  <style type="text/css">
 
-html,.aside-dialog,.aside-content{
-  height: 100%
-}
-#container{
-  width: 100%;
-  position: absolute;
-  top: 50px;
-  bottom: 0px;
-  left: 0px;
-}
+  html,.aside-dialog,.aside-content{
+    height: 100%
+  }
+  #container{
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 0px;
+  }
 
-</style>
+  </style>
+  </div>
 </div>
