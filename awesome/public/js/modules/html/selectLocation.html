@@ -2,6 +2,7 @@
 <div class="aside left am-slide-left" tabindex="-1" role="dialog" style="display:block; width:100%" ng-controller="sponsorController">
   <div class="aside-dialog">
     <div class="aside-content">
+
       <div class="aside-header" ng-show="oContent.map">
         <button type="button" class="close" ng-click="$hide()">
           ×
@@ -14,10 +15,13 @@
       <div class="mapArea" ng-show="oContent.map">
           <div id="{{oContent.map.id}}">
             {{fnInitMap()}}
-            {{fnMapListenClick()}}
           </div>
-    </div>
-  </div>
+      </div>
+      <div class="input-group ">
+        <div class="input-group-addon"><span class="fa fa-search"></span></div>
+        <input type="text" class="form-control" id="keyword" placeholder="输入地点搜索" onfocus='this.value=""'>
+      </div>
+   </div>
   <style type="text/css">
 
   html,.aside-dialog,.aside-content{
@@ -30,7 +34,12 @@
     bottom: 0px;
     left: 0px;
   }
-
+  .amap-sug-result{
+    z-index: 1060;
+  }
+  .amap_lib_placeSearch_poi{
+    display: none;
+  }
   </style>
   </div>
 </div>

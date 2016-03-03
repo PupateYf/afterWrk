@@ -126,7 +126,6 @@ aceLoginSignUp.directive('ngRsterr', [function(){
 aceLoginSignUp.directive('ngSbchck', function(){
 	return {
 		link : function (s, ele, attrs) {
-			console.log(attrs);
 			ele.bind('click', function (e) {
 					var obj = attrs.ngClick.match('signup')||attrs.ngClick.match('ValidCode') ? s.$parent.signupData : s.$parent.loginData;
 					var valided = 0, itemcount = 0, validCodeRequire = 0;
