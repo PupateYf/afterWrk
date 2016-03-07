@@ -6,6 +6,96 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       url: '/upload'
   });
 
+  var rawActiveData = $scope.rawActiveData = {
+      kind: "",//number
+      topic: "",//str
+      date: "",
+      time: "",// 用于与date一起生成时间戳
+      locationXY: "",//地点经纬度
+      gender: "",//number
+      count: "",
+      profile: "",
+      contacts: {
+          name: "",
+          phone: "",
+      },
+      cost: {
+          fee: "",
+          useWay: ""
+      }
+  }
+  var activeUIData = $scope.activeUIData = {
+      kind: "",//number
+      topic: "",//str
+      date: "",
+      time: "",// 用于与date一起生成时间戳
+      location: "",
+      gender: "",//number
+      count: "",
+      profile: "",
+      contacts: {
+          name: "",
+          phone: "",
+      },
+      cost: {
+          fee: "",
+          useWay: ""
+      }
+  }
+  var finalActiveData = $scope.finalActiveData = {
+      kind: "",//number
+      topic: "",//str
+      date: "",
+      time: "",// 用于与date一起生成时间戳
+      location: "",
+      gender: "",//number
+      count: "",
+      profile: "",
+      contacts: {
+          name: "",
+          phone: "",
+      },
+      cost: {
+          fee: "",
+          useWay: ""
+      }
+  }
+  $scope.active_selectKind = function (type) {
+      activeData.kind = type;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   uploader.filters.push({
             name: 'imageFilter',
             fn: function(item /*{File|FileLikeObject}*/, options) {
@@ -112,3 +202,38 @@ aceCreateActive.directive('ngPicupload', ['$window', function($window) {
             }
         };
 }]);
+aceCreateActive.directive('ngDateChange', function(){
+  return {
+    link : function (s, ele, attrs) {
+        console.log(s);
+        ele.bind('change', function (e) {
+          //get user pick date
+          console.log('DateChange');
+          // Date日期转毫秒数
+          // time转毫秒数
+          // 获得时区 －480
+          var date = new Date(s.rawActiveData.date);// Date日期
+          var tmpDate = date.toString().split(' ');//["Sat", "Mar", "05", "2016", "15:15:47", "GMT+0800", "(CST)"]
+          var tmp = [tmpDate[3], tmpDate[1], tmpDate[2]];
+          s.activeUIData.date = tmp.join(' ');
+          s.$apply();
+        })
+    }
+  }
+})
+aceCreateActive.directive('ngTimeChange', function(){
+return {
+    link : function (s, ele, attrs) {
+        console.log(s);
+        ele.bind('change', function (e) {
+          console.log('TimeChange');
+          var time = new Date(s.rawActiveData.time);// Time时间
+          console.log(s.rawActiveData.time)
+          var tmp = (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) + ' : ' + (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes());
+          console.log('tmp is : ',tmp);
+          s.activeUIData.time = tmp;
+          s.$apply();
+        })
+    }
+  }
+})

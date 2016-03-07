@@ -4,7 +4,7 @@
     <div class="aside-content">
 
       <div class="aside-header" ng-show="oContent.map">
-        <button type="button" class="close" ng-click="$hide()">
+        <button type="button" class="close" ng-click="$hide();fnSetLocation()">
           ×
         </button>
         <h4 class="aside-title" ng-show="oContent.map">
@@ -12,30 +12,42 @@
         </h4>
       </div>
 
+      <div class="search_input input-group ">
+        <div class="input-group-addon"><span class="fa fa-search"></span></div>
+        <input type="text" class="form-control" id="keyword" placeholder="输入地点搜索" onfocus='this.value=""'>
+      </div>
+
       <div class="mapArea" ng-show="oContent.map">
           <div id="{{oContent.map.id}}">
             {{fnInitMap()}}
           </div>
       </div>
-      <div class="input-group ">
-        <div class="input-group-addon"><span class="fa fa-search"></span></div>
-        <input type="text" class="form-control" id="keyword" placeholder="输入地点搜索" onfocus='this.value=""'>
-      </div>
+
    </div>
   <style type="text/css">
 
   html,.aside-dialog,.aside-content{
     height: 100%
   }
+  .aside .aside-dialog .aside-header{
+    background: black;
+    height: 1rem;
+  }
   #container{
     width: 100%;
     position: absolute;
-    top: 50px;
+    top: 1rem;
     bottom: 0px;
     left: 0px;
   }
+  .search_input{
+    position: fixed;
+    top: 1.1rem;
+    z-index: 999
+  }
   .amap-sug-result{
     z-index: 1060;
+    top:1.85rem !important;
   }
   .amap_lib_placeSearch_poi{
     display: none;

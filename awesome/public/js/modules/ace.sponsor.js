@@ -13,22 +13,15 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 	  		markers : []
 	  	}
 	};
-	//ajax param init
-	$scope.formData = {
-		id : "",
-		password : ""
-	}
-
-	// $scope.oFormData = null;
-	$scope.oAjaxConfig = {
-		method : 'POST',
+	// data which will be send to createActive controller
+	$scope.data2CA = {
+			locationXY : '',//lng-lat 经纬度
+			location: ''
 	};
-
 	//AMap util
 	$scope.util = {};
 	//function
 	$scope.fnInitMap = function (){
-
 		$.extend($scope.util,{
 				render : function() {
 						var position = new AMap.LngLat(116.397428,39.90923);//天安门
@@ -48,18 +41,24 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 								map : map,
 								position : position
 						})
+						$scope.data2CA.locationXY = position.lng + '-' + position.lat;
 						return marker;
 				},
 				//在指定位置打开信息窗体
 				openInfo: function(map, lnglat, info) {
 						//构建信息窗体中显示的内容
 						var msg = [];
-						msg.push(info);
+						$scope.data2CA.location = info;
+						var info1 = info.substring(0 , info.length/2);
+						var info2 = info.substring(info.length/2, info.length);
+						msg.push(info1);
+						msg.push(info2);
 						infoWindow = new AMap.InfoWindow({
 						content: msg.join("<br/>"),  //使用默认信息窗体框样式，显示信息内容
 						offset: new AMap.Pixel(0,-28)
 						});
 						infoWindow.open(map, lnglat);
+						console.log($scope.data2CA);
 				},
 				resetMarkers: function (map, position) {
 					map.remove($scope.oContent.map.markers);
@@ -92,9 +91,7 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 					 buttonPosition:'RB'
 			 });
 			$scope.oContent.map.obj.addControl(geolocation);
-
     });
-		console.log($scope.util.autocomplete);
 		AMap.event.addListener($scope.util.autocomplete, "select", function(e){
 			 $scope.util.placeSearch.search(e.poi.name,function(status, result){
 				 if(status === 'complete'){
@@ -120,10 +117,7 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 			 });
 		});
 		AMap.event.addListener($scope.oContent.map.obj, 'click', function(e) {
-			  console.log('click');
-
 				var map = $scope.oContent.map.obj;
-				console.log(map.getAllOverlays('marker'));
 				map.remove($scope.oContent.map.markers);
 				var position = e.lnglat;
 				$scope.util.resetMarkers(map, position);
@@ -138,10 +132,21 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 						$scope.util.openInfo(map, position, info);
 						return;
 				})
-
 		});
+		console.log('[aceSponsor] ', $scope);
+	}// END OF init
 
+	$scope.fnSetLocation = function () {
+		// 向上查找createActive 中的 $scope.rawActiveData 以及 $scope.activeUIData 设定locationXY 以及 location 的值
+		var obj = $scope.$parent;
+		// 查找开始
+		while (!obj.hasOwnProperty('rawActiveData')) {
+			obj = obj.$parent;
+		}
+		obj.rawActiveData.locationXY = $scope.data2CA.locationXY;
+		obj.activeUIData.location = $scope.data2CA.location;
 	}
+
 
 }])
 

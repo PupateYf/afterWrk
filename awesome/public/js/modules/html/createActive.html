@@ -60,23 +60,24 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
             <div class="input-group-addon">
                 <span class="fa fa-hashtag fixWidth"></span>
             </div>
-            <input type="text" class="form-control" placeholder="请输入主题" aria-describedby="topic">
+            <input type="text" class="form-control" placeholder="请输入主题" ng-model="rawActiveDate.topic" aria-describedby="topic">
         </div>
 
         <span class="title">时间 Time</span>
         <div class="input-inline">
             <div class="form-group long">
                 <div class="input-group">
-                  <div class="input-group-addon">
-                      <span class="fa fa-calendar fixWidth"></span>
-                  </div>
-                  <input type="date" style="position: absolute;width: 60%;z-index: 999;opacity: 0;" class="form-control long">
-                  <input type="text" class="form-control long" name="date" placeholder="请输入日期">
+                    <div class="input-group-addon">
+                        <span class="fa fa-calendar fixWidth"></span>
+                    </div>
+                    <input type="date" style="position: absolute;width: 60%;z-index: 999;opacity: 0;" ng-model="rawActiveData.date" class="form-control long" ng-date-change>
+                    <input type="text" class="form-control long" name="date" placeholder="请输入日期" ng-value="activeUIData.date" >
+
                 </div>
             </div>
             <div class="form-group short">
-                <input type="time" class="form-control" style="position: absolute;opacity: 0;">
-                <input type="text" class="form-control" name="date" placeholder="具体时间">
+                <input type="time" class="form-control" style="position: absolute;opacity: 0;" ng-model="rawActiveData.time" ng-time-change>
+                <input type="text" class="form-control" name="date" placeholder="具体时间" ng-value="activeUIData.time ">
             </div>
         </div>
         <span class="title">集合点 Location</span>
@@ -85,7 +86,7 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
               <span class="fa fa-map-marker fixWidth"></span>
           </div>
             <input type="button" style="position:absolute;opacity:0;z-index:999;width:80%" class="form-control" data-template-url="js/modules/html/selectLocation.html" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body">
-            <input type="text" class="form-control" name="location" placeholder="请设置集合点">
+            <input type="text" class="form-control" name="location" placeholder="请设置集合点" ng-value="activeUIData.location">
         </div>
 
 
@@ -107,7 +108,7 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
           <div class="input-group-addon">
               <span class="fa fa-group fixWidth"></span>
           </div>
-            <input type="number" class="form-control" name="date" placeholder="请输入人数">
+            <input type="number" class="form-control" name="count" placeholder="请输入人数">
         </div>
 
         <span class="title">活动简介 Profile</span>
