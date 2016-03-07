@@ -43,7 +43,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       }
   }
   var finalActiveData = $scope.finalActiveData = {
-      kind: "",//number
+      kind: "",//number ［“聚餐”, "运动", "聚会", "学习"］
       topic: "",//str
       date: "",
       time: "",// 用于与date一起生成时间戳
@@ -61,8 +61,14 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       }
   }
   $scope.active_selectKind = function (type) {
-      activeData.kind = type;
+      $scope.rawActiveData.kind = type;
+      $scope.activeUIData.kind = type;
   }
+  $scope.active_selectGender = function (type) {
+      $scope.rawActiveData.gender = type;
+      $scope.activeUIData.gender = type;
+  }
+
 
 
 
@@ -205,7 +211,6 @@ aceCreateActive.directive('ngPicupload', ['$window', function($window) {
 aceCreateActive.directive('ngDateChange', function(){
   return {
     link : function (s, ele, attrs) {
-        console.log(s);
         ele.bind('change', function (e) {
           //get user pick date
           console.log('DateChange');
@@ -224,7 +229,6 @@ aceCreateActive.directive('ngDateChange', function(){
 aceCreateActive.directive('ngTimeChange', function(){
 return {
     link : function (s, ele, attrs) {
-        console.log(s);
         ele.bind('change', function (e) {
           console.log('TimeChange');
           var time = new Date(s.rawActiveData.time);// Time时间

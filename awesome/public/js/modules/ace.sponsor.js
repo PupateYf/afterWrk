@@ -10,7 +10,10 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 	  		title : "map",
 	  		id : "container",
 	  		obj : null,
-	  		markers : []
+	  		markers : [],
+				autocomplete : null,
+				geocoder : null,
+				placeSearch : null
 	  	}
 	};
 	// data which will be send to createActive controller
@@ -69,20 +72,56 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 		});
 		$scope.util.render();
 		AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Geocoder', 'AMap.Geolocation'], function () {
-      var autoOptions = {
+			var autoOptions = {
         input: 'keyword'//使用联想输入的input的id
       };
-      var autocomplete = new AMap.Autocomplete(autoOptions);
-			var geocoder = new AMap.Geocoder();
-			var placeSearch = new AMap.PlaceSearch({
+      $scope.oContent.map.autocomplete = new AMap.Autocomplete(autoOptions);
+			$scope.oContent.map.geocoder = new AMap.Geocoder();
+			$scope.oContent.map.placeSearch = new AMap.PlaceSearch({
             city: '广州',
             map: $scope.oContent.map.obj
       });
-			$.extend($scope.util,{
-					autocomplete : autocomplete,
-					geocoder : geocoder,
-					placeSearch : placeSearch
-			})
+			AMap.event.addListener($scope.oContent.map.obj, 'click', function(e) {
+					var map = $scope.oContent.map.obj;
+					map.remove($scope.oContent.map.markers);
+					var position = e.lnglat;
+					$scope.util.resetMarkers(map, position);
+					//获取地名
+					$scope.oContent.map.geocoder.getAddress(position,function(status,result){
+							var info;
+							if(status === 'complete') {
+								 info = result.regeocode.formattedAddress;
+							} else {
+								 info = '无法获取地址';
+							}
+							$scope.util.openInfo(map, position, info);
+							return;
+					})
+			});// END OF EVENT
+			AMap.event.addListener($scope.oContent.map.autocomplete, "select", function(e){
+				 $scope.oContent.map.placeSearch.search(e.poi.name,function(status, result){
+					 if(status === 'complete'){
+						 var map = $scope.oContent.map.obj;
+						 var pointLng = result.poiList.pois[0].location.lng,
+								 pointLat = result.poiList.pois[0].location.lat;
+						 var position = new AMap.LngLat(pointLng, pointLat);
+						 map.setCenter(position);
+						 $scope.util.resetMarkers(map, position);
+						//获取地名
+						$scope.oContent.map.geocoder.getAddress(position,function(status,result){
+								var info;
+								if(status === 'complete') {
+									 info = result.regeocode.formattedAddress;
+								} else {
+									 info = '无法获取地址';
+								}
+								$scope.util.openInfo(map, position, info);
+								return;
+						})
+
+					 }
+				 });
+			});// END OF EVENT
 			var geolocation = new AMap.Geolocation({
 					 enableHighAccuracy: true,//是否使用高精度定位，默认:true
 					 timeout: 10000,          //超过10秒后停止定位，默认：无穷大
@@ -92,48 +131,6 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 			 });
 			$scope.oContent.map.obj.addControl(geolocation);
     });
-		AMap.event.addListener($scope.util.autocomplete, "select", function(e){
-			 $scope.util.placeSearch.search(e.poi.name,function(status, result){
-				 if(status === 'complete'){
-					 var map = $scope.oContent.map.obj;
-					 var pointLng = result.poiList.pois[0].location.lng,
-							 pointLat = result.poiList.pois[0].location.lat;
-					 var position = new AMap.LngLat(pointLng, pointLat);
-					 map.setCenter(position);
-					 $scope.util.resetMarkers(map, position);
-	 				//获取地名
-	 				$scope.util.geocoder.getAddress(position,function(status,result){
-	 						var info;
-	 						if(status === 'complete') {
-	 							 info = result.regeocode.formattedAddress;
-	 						} else {
-	 							 info = '无法获取地址';
-	 						}
-	 						$scope.util.openInfo(map, position, info);
-	 						return;
-	 				})
-
-				 }
-			 });
-		});
-		AMap.event.addListener($scope.oContent.map.obj, 'click', function(e) {
-				var map = $scope.oContent.map.obj;
-				map.remove($scope.oContent.map.markers);
-				var position = e.lnglat;
-				$scope.util.resetMarkers(map, position);
-				//获取地名
-				$scope.util.geocoder.getAddress(position,function(status,result){
-						var info;
-						if(status === 'complete') {
-							 info = result.regeocode.formattedAddress;
-						} else {
-							 info = '无法获取地址';
-						}
-						$scope.util.openInfo(map, position, info);
-						return;
-				})
-		});
-		console.log('[aceSponsor] ', $scope);
 	}// END OF init
 
 	$scope.fnSetLocation = function () {
