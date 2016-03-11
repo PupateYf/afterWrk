@@ -23,6 +23,7 @@ module.exports = {
         var param = req.body;
         var result;
         var db = new sqlite3.Database(DBname);
+        
         //need to get account from cookies;
         //need to format the datetime;
         db.run($sql.insert,[account, param.imgName, param.kind, param.topic, param.imgName, param.locationXY, param.gender, param.count, param.profile, param.contacts, param.cost],function (err, row){
