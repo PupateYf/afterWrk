@@ -3,7 +3,7 @@ var aceCreateActive = angular.module('ace.createActive');
 aceCreateActive.controller('activeController', ['$scope', 'FileUploader', function($scope, FileUploader) {
 
   var uploader = $scope.uploader = new FileUploader({
-      url: '/upload'
+      url: '/work/uploadActiveImg'
   });
 
   var rawActiveData = $scope.rawActiveData = {
@@ -77,7 +77,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
   $scope.isOk = 0;
   $scope.fnSubimt = function () {
     // 图片上传
-
+    uploader.uploadAll()
     // 数据提交
 
     // 通过共同变量isOk=2时 代表返回成功；
@@ -152,6 +152,8 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
       console.info('onSuccessItem', fileItem, response, status, headers);
+      if(response.code === 1) $scope.isOk++;
+      console.log('isOk is ',$scope.isOk);
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
       console.info('onErrorItem', fileItem, response, status, headers);
