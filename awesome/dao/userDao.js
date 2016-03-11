@@ -93,7 +93,6 @@ module.exports = {
 						code : -100,
 						msg : '数据库错误'
 					}
-					db.close();
 				} else {
 					debug ? console.log('[login sqlite3]:执行INSERT') : console.log('');
 					result = {
@@ -102,9 +101,9 @@ module.exports = {
 					}
 					res.cookie('account', param.account, { expires: new Date(Date.now() + 15*60*1000)});
 					res.cookie('awId', now, { expires: new Date(Date.now() + 15*60*1000)});
-					$util.jsonWrite(res, result);
-					db.close();
 				}
+				db.close();
+				$util.jsonWrite(res, result);
 			});
 		},
 	// 通过cookie判断是否已经登陆

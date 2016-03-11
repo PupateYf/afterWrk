@@ -11,7 +11,7 @@ router.post('/uploadActiveImg', function (req, res, next) {
   workDao.uploadActiveImg(req, res, next);
 });
 router.post('/createActive', function (req, res, next) {
-  debug ? console.log('[/createActive]: call') : {};
+  workDao.createActive(req, res, next);
 });
 
 module.exports = router;

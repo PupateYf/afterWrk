@@ -141,6 +141,7 @@ aceSponsor.controller('sponsorController', ['$scope', '$http', function ($scope,
 			obj = obj.$parent;
 		}
 		obj.rawActiveData.locationXY = $scope.data2CA.locationXY;
+		obj.finalActiveData.locationXY = $scope.data2CA.locationXY;
 		obj.activeUIData.location = $scope.data2CA.location;
 	}
 

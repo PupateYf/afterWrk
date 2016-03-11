@@ -1,6 +1,6 @@
 AppConfig.registerModule('ace.createActive');
 var aceCreateActive = angular.module('ace.createActive');
-aceCreateActive.controller('activeController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http', function($scope, FileUploader, $http) {
 
   var uploader = $scope.uploader = new FileUploader({
       url: '/work/uploadActiveImg'
@@ -50,7 +50,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       topic: "",//str
       date: "",
       time: "",// 用于与date一起生成时间戳
-      location: "",
+      locationXY: "",
       gender: "",//number
       count: "",
       profile: "",
@@ -69,17 +69,31 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
   $scope.active_selectKind = function (type) {
       $scope.rawActiveData.kind = type;
       $scope.activeUIData.kind = type;
+      $scope.finalActiveData.kind = type;
   }
   $scope.active_selectGender = function (type) {
       $scope.rawActiveData.gender = type;
       $scope.activeUIData.gender = type;
+      $scope.finalActiveData.gender = type;
   }
   $scope.isOk = 0;
   $scope.fnSubimt = function () {
     // 图片上传
     uploader.uploadAll()
     // 数据提交
-
+    console.log($scope.rawActiveData.topic);
+    $.extend($scope.finalActiveData,{
+      topic: $scope.rawActiveData.topic,
+      count: $scope.rawActiveData.count,
+      profile: $scope.rawActiveData.profile,
+      contacts: $scope.rawActiveData.contacts.name + '-' + $scope.rawActiveData.contacts.phone,
+      cost: $scope.rawActiveData.cost.fee + '-' + $scope.rawActiveData.cost.useWay
+    })
+    console.log($scope.finalActiveData);
+    $http({url: '/work/createActive', data: $scope.finalActiveData, method: 'POST'})
+    .then(function(res){
+      console.log(res.data.code);
+    });
     // 通过共同变量isOk=2时 代表返回成功；
   }
 
@@ -240,6 +254,7 @@ aceCreateActive.directive('ngDateChange', function(){
           // time转毫秒数
           // 获得时区 －480
           var date = new Date(s.rawActiveData.date);// Date日期
+          s.finalActiveData.date = date;
           var tmpDate = date.toString().split(' ');//["Sat", "Mar", "05", "2016", "15:15:47", "GMT+0800", "(CST)"]
           var tmp = [tmpDate[3], tmpDate[1], tmpDate[2]];
           s.activeUIData.date = tmp.join(' ');
@@ -254,6 +269,7 @@ return {
         ele.bind('change', function (e) {
           console.log('TimeChange');
           var time = new Date(s.rawActiveData.time);// Time时间
+          s.finalActiveData.time = time;
           console.log(s.rawActiveData.time)
           var tmp = (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) + ' : ' + (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes());
           console.log('tmp is : ',tmp);
