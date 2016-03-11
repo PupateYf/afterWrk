@@ -39,6 +39,7 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
         <div ng-repeat="item in uploader.queue" class="img-canvas">
           <div ng-picupload="{ file: item._file}" ng-show="uploader.isHTML5"></div>
         </div>
+        <input type="hidden" name="imgName" ng-value="finalActiveData.imgName">
     </div>
     <div class="active_details">
         <span class="title">类型 Kind</span>

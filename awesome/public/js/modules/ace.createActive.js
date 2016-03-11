@@ -7,6 +7,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
   });
 
   var rawActiveData = $scope.rawActiveData = {
+      imgName: "",
       kind: "",//number
       topic: "",//str
       date: "",
@@ -25,6 +26,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       }
   }
   var activeUIData = $scope.activeUIData = {
+      imgName: "",
       kind: "",//number
       topic: "",//str
       date: "",
@@ -43,6 +45,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       }
   }
   var finalActiveData = $scope.finalActiveData = {
+      imgName: "",
       kind: "",//number ［“聚餐”, "运动", "聚会", "学习"］
       topic: "",//str
       date: "",
@@ -60,6 +63,9 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
           useWay: ""
       }
   }
+  $scope.formatImgName = function () {
+    return new Date().getTime();
+  }
   $scope.active_selectKind = function (type) {
       $scope.rawActiveData.kind = type;
       $scope.activeUIData.kind = type;
@@ -67,6 +73,14 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
   $scope.active_selectGender = function (type) {
       $scope.rawActiveData.gender = type;
       $scope.activeUIData.gender = type;
+  }
+  $scope.isOk = 0;
+  $scope.fnSubimt = function () {
+    // 图片上传
+
+    // 数据提交
+
+    // 通过共同变量isOk=2时 代表返回成功；
   }
 
 
@@ -116,7 +130,13 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', functi
       if(uploader.queue.length > 1){
         uploader.queue.shift(0);
       }
+
       console.info('onAfterAddingFile', fileItem);
+      console.log(uploader.queue[0].file.name);
+      $scope.finalActiveData.imgName = $scope.formatImgName();
+      console.log($scope.finalActiveData.imgName);
+      uploader.queue[0].file.name = $scope.finalActiveData.imgName;
+      console.log(uploader.queue[0].file.name);
   };
   uploader.onAfterAddingAll = function(addedFileItems) {
       console.info('onAfterAddingAll', addedFileItems);

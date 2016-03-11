@@ -20,7 +20,7 @@ var $sql = {
 		queryAll : 'select * FROM user'
 };
 
-var debug = true;
+var debug = false;
 
 module.exports = {
 	// 登陆
