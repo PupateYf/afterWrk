@@ -54,14 +54,8 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       gender: "",//number
       count: "",
       profile: "",
-      contacts: {
-          name: "",
-          phone: "",
-      },
-      cost: {
-          fee: "",
-          useWay: ""
-      }
+      contacts: "",
+      cost: ""
   }
   $scope.formatImgName = function () {
     return new Date().getTime();
@@ -77,10 +71,8 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       $scope.finalActiveData.gender = type;
   }
   $scope.isOk = 0;
+  $scope.errorMsg = '';
   $scope.fnSubimt = function () {
-    // 图片上传
-    uploader.uploadAll()
-    // 数据提交
     console.log($scope.rawActiveData.topic);
     $.extend($scope.finalActiveData,{
       topic: $scope.rawActiveData.topic,
@@ -90,11 +82,50 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       cost: $scope.rawActiveData.cost.fee + '-' + $scope.rawActiveData.cost.useWay
     })
     console.log($scope.finalActiveData);
+    // 数据检测
+    $scope.fnCheckForm();
+    if(!$scope.permission) return;
+    // 图片上传
+    uploader.uploadAll();
+    // 数据提交
     $http({url: '/work/createActive', data: $scope.finalActiveData, method: 'POST'})
     .then(function(res){
       console.log(res.data.code);
+      $scope.isOk++;
+      if($scope.isOk === 2){
+        // 此处需要跳转
+      }
     });
     // 通过共同变量isOk=2时 代表返回成功；
+  }
+  $scope.permission = true;
+  $scope.fnCheckForm = function () {
+    $scope.permission = true;
+    for(item in $scope.finalActiveData) {
+        switch (item) {
+          case 'contacts':{
+            var phone = $scope.finalActiveData[item].split('-')[1];
+            if(!(/^1[3|4|5|7|8]\d{9}$/.test(phone))){
+              $scope.errorMsg = '手机号码格式错误';
+              $scope.permission = false;
+            } else {
+            }
+            setTimeout(function(){$scope.errorMsg='';$scope.permission = true;$scope.$apply()},1500);
+            break;
+          }
+          default: {
+            var val = $scope.finalActiveData[item].toString();
+            console.log(item,' ',!!val);
+            if(!!val);
+            else {
+              $scope.errorMsg = '表单填写不完整';
+              $scope.permission = false;
+            }
+            setTimeout(function(){$scope.errorMsg='';$scope.permission = true;$scope.$apply()},1500);
+            break;
+          }
+        }
+      }
   }
 
 
@@ -167,6 +198,9 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
       console.info('onSuccessItem', fileItem, response, status, headers);
       if(response.code === 1) $scope.isOk++;
+      if($scope.isOk === 2){
+        //此处需要跳转
+      }
       console.log('isOk is ',$scope.isOk);
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
@@ -254,7 +288,7 @@ aceCreateActive.directive('ngDateChange', function(){
           // time转毫秒数
           // 获得时区 －480
           var date = new Date(s.rawActiveData.date);// Date日期
-          s.finalActiveData.date = date;
+          s.finalActiveData.date = date.getTime();
           var tmpDate = date.toString().split(' ');//["Sat", "Mar", "05", "2016", "15:15:47", "GMT+0800", "(CST)"]
           var tmp = [tmpDate[3], tmpDate[1], tmpDate[2]];
           s.activeUIData.date = tmp.join(' ');
@@ -269,7 +303,7 @@ return {
         ele.bind('change', function (e) {
           console.log('TimeChange');
           var time = new Date(s.rawActiveData.time);// Time时间
-          s.finalActiveData.time = time;
+          s.finalActiveData.time = time.getTime() + 28800000;// 匹配东八区
           console.log(s.rawActiveData.time)
           var tmp = (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) + ' : ' + (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes());
           console.log('tmp is : ',tmp);

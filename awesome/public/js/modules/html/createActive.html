@@ -26,6 +26,7 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
 .active_details .input-inline .second{width:60%;position:absolute;right:0}
 
 .active_holder{height:.4rem;width:100%}
+.err_show{position: fixed;top: 50%;left: 50%;width: 50%;transform: translate(-50%,-50%);background: rgba(0,0,0,0.69);color: white;text-align: center;padding: .4rem;font-size: .36rem;border-radius: .2rem;z-index: 1000}
 </style>
 <section>
     <div class="active_banner">
@@ -143,7 +144,7 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
 
         <button href="javascript:;" class="btn btn-block btn-success" ng-click="fnSubimt()">发 布</button>
     </div>
-
     <div class="active_holder">
     </div>
+    <div ng-class="{'err_show':!!errorMsg}" ng-show="errorMsg">{{errorMsg}}</div>
 </section>

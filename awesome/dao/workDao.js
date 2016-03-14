@@ -19,14 +19,18 @@ var $sql = {
 
 module.exports = {
     createActive : function (req, res, next) {
-        var account = '13580353945';
+        var account = '13580353945'; // for test
+        // var account = req.cookies.account;
         var param = req.body;
         var result;
         var db = new sqlite3.Database(DBname);
-        
+
         //need to get account from cookies;
         //need to format the datetime;
-        db.run($sql.insert,[account, param.imgName, param.kind, param.topic, param.imgName, param.locationXY, param.gender, param.count, param.profile, param.contacts, param.cost],function (err, row){
+        var date = param.date,
+            time = param.time;
+        var datetime = date + time;
+        db.run($sql.insert,[account, param.imgName, param.kind, param.topic, datetime, param.locationXY, param.gender, param.count, param.profile, param.contacts, param.cost],function (err, row){
             if(err){
                 console.log(err);
                 result = {
