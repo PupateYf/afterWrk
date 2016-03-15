@@ -5,47 +5,34 @@
  * @date 2016-03-10
  */
 
-var	sqlite3 = require('sqlite3').verbose(),
-   	$util = require('../util/util'),
-   	DBname = require('../DB/DBConfig').name,
+var	$util = require('../util/util'),
     formidable = require('formidable'),
+    mongoose = require('mongoose');
  		md5 = require('md5'),
     fs = require('fs'),
-    UPLOAD_DIR = '/activeBanner/';
-
-var $sql = {
-    insert : 'INSERT INTO active(account, imgName, kind, topic, dateTime, locationXY, gender, count, profile, contacts, cost) VALUES(?,?,?,?,?,?,?,?,?,?,?)'
-};
+    UPLOAD_DIR = '/activeBanner/',
+    Active = require('../dao/activeDao');
 
 module.exports = {
     createActive : function (req, res, next) {
         var account = '13580353945'; // for test
         // var account = req.cookies.account;
         var param = req.body;
-        var result;
-        var db = new sqlite3.Database(DBname);
-
-        //need to get account from cookies;
-        //need to format the datetime;
-        var date = param.date,
-            time = param.time;
-        var datetime = date + time;
-        db.run($sql.insert,[account, param.imgName, param.kind, param.topic, datetime, param.locationXY, param.gender, param.count, param.profile, param.contacts, param.cost],function (err, row){
-            if(err){
-                console.log(err);
-                result = {
-                  code: -100,
-                  msg: '服务器繁忙'
-                }
-            } else {
-                result = {
-                  code : 1,
-                  msg : '录入成功'
-                }
-            }
-            db.close();
-            $util.jsonWrite(res, result);
-        })
+        var todoObj = {
+                account    : account,
+                imgName    : param.imgName,
+                kind       : param.kind,
+                topic      : param.topic,
+                datetime   : param.date + param.time,
+                locationXY : param.locationXY,
+                gender     : param.gender,
+                count      : param.count,
+                profile    : param.profile,
+                contacts   : param.contacts,
+                cost       : param.cost,
+                whoIn      : [account]
+        }
+        Active.save(todoObj, $util.jsonWrite, res);
     },
     uploadActiveImg : function (req, res, next) {
       console.log('[post]:upload method call');

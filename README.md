@@ -1,3 +1,5 @@
 # afterWrk
 
-nothing to say
+		mongod --config /usr/local/etc/mongod.conf
+		
+		npm start

@@ -1,6 +1,6 @@
 var express = require('express'),
     router = express.Router();
-    workDao = require('../dao/workDao');
+    activeApi = require('../api/activeApi');
 var debug = true;
 router.get('/', function (req,res,next) {
     res.send('respond with a resource');
@@ -8,10 +8,10 @@ router.get('/', function (req,res,next) {
 
 
 router.post('/uploadActiveImg', function (req, res, next) {
-  workDao.uploadActiveImg(req, res, next);
+  activeApi.uploadActiveImg(req, res, next);
 });
 router.post('/createActive', function (req, res, next) {
-  workDao.createActive(req, res, next);
+  activeApi.createActive(req, res, next);
 });
 
 module.exports = router;
