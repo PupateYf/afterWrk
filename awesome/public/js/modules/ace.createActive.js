@@ -57,8 +57,33 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       contacts: "",
       cost: ""
   }
+  $scope.fileExtName = '';
   $scope.formatImgName = function () {
-    return new Date().getTime();
+    return new Date().getTime() + '.' + $scope.fileExtName;
+  }
+  $scope.setFileExtName = function (temp) {
+      var extName = '';
+      switch (temp) {
+        case 'image/pjpeg':
+          extName = 'jpg';
+          break;
+        case 'image/jpeg':
+          extName = 'jpg';
+          break;
+        case 'image/png':
+          extName = 'png';
+          break;
+        case 'image/x-png':
+          extName = 'png';
+          break;
+        case 'image/bmp':
+          extName = 'bmp';
+          break;
+        case 'image/gif':
+          extName = 'gif';
+          break;
+      }
+      $scope.fileExtName = extName;
   }
   $scope.active_selectKind = function (type) {
       $scope.rawActiveData.kind = type;
@@ -177,11 +202,13 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       }
 
       console.info('onAfterAddingFile', fileItem);
-      console.log(uploader.queue[0].file.name);
+      console.log(fileItem.file);
+      $scope.setFileExtName(fileItem.file.type);
+      console.log($scope.fileExtName);
       $scope.finalActiveData.imgName = $scope.formatImgName();
-      console.log($scope.finalActiveData.imgName);
+      console.log('格式化的图片名为', $scope.finalActiveData.imgName);
       uploader.queue[0].file.name = $scope.finalActiveData.imgName;
-      console.log(uploader.queue[0].file.name);
+      console.log('队列当前图片名', uploader.queue[0].file.name);
   };
   uploader.onAfterAddingAll = function(addedFileItems) {
       console.info('onAfterAddingAll', addedFileItems);
