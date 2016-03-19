@@ -99,5 +99,14 @@ module.exports = {
                 'data'   : files
             });
           });
+    },
+    loadActive : function (req, res, next) {
+        console.log('[POST]:loadActive call');
+        var requrest = req.body;
+        var conditions = requrest.conditions,
+            fields = requrest.fields,
+            options = requrest.options;
+        // res.json({code:1});
+        Active.find(conditions, fields, options, $util.jsonWrite, res);
     }
 }

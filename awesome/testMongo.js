@@ -1,54 +1,74 @@
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
-var url = 'mongodb://localhost:27017/test';
-MongoClient.connect(url, function(err, db) {
-  console.log(err);
-  console.log('db start');
-  findDocuments(db, function() {
-    db.close();
-  });
-  insertDocuments(db, function() {
-    db.close();
-  });
+var $util = require('./util/util')
+
+mongoose.connect('mongodb://localhost/afterWrk');
+
+var ActiveSchema = new Schema({
+    account    : {type : String},
+    imgName    : {type : String},
+    kind       : {type : Number},
+    topic      : {type : String},
+    datetime   : {type : String},
+    locationXY : {type : String},
+    gender     : {type : Number},
+    count      : {type : Number},
+    profile    : {type : String},
+    contacts   : {type : String},
+    cost       : {type : String},
+    whoIn      : {type : Array }
 })
 
-var insertDocuments = function(db, callback) {
-  // Get the documents collection
-  var collection = db.collection('documents');
-  // Insert some documents
-  collection.insertMany([
-    {a : 1}, {a : 2}, {a : 3}
-  ], function(err, result) {
-    console.log("Inserted 3 documents into the document collection");
-    callback(result);
-  });
+var Active = mongoose.model('actives', ActiveSchema);
+
+// 实例化
+// var todoObj = require('dao/activeDAO');
+
+// var conditions = {};
+// var fields = null;
+// var options = {skip:10, limit:10};
+// var callback = $util.jsonWrite;
+// todoObj.find(conditions, fields, options, callback, res);
+
+
+// Active.find({},null,{skip:10,limit:10}, function(err, obj){
+//     if(err){
+//        console.log(err);
+//     } else {
+//        console.log(obj);
+//     }
+// })
+
+
+
+var tmpArr = [];
+var createTmpData = function() {
+    for(var i = 0; i < 30 ; i++) {
+        tmpArr.push({
+            account    : '13580353945',
+            imgName    : '1458123999732.jpg',
+            kind : 1,
+            topic : "这一行是主题",
+            datetime : 1463323140000 + i * 60 * 1000,
+            locationXY : "116.398801-39.907218",
+            gender : 1,
+            count : 15,
+            profile : "这是详情，详情，详情，重要的事情说三遍",
+            contacts : "Mr.John-13580353945",
+            cost : "15-15元用于埋单",
+            whoIn : [ "13580353945.png","13798111091.png" ]
+        })
+    }
 }
 
-var updateDocument = function(db, callback) {
-  // Get the documents collection
-  var collection = db.collection('documents');
-  // Update document where a is 2, set b equal to 1
-  collection.updateOne({ a : 2 }, { $set: { b : 1 } }, function (err, result) {
-    console.log("Updated the document with the field a equal to 2");
-    callback(result);
-  });
-}
-var removeDocument = function(db, callback) {
-  // Get the documents collection
-  var collection = db.collection('documents');
-  // Insert some documents
-  collection.deleteOne({ a : 3 }, function(err, result) {
-    console.log("Removed the document with the field a equal to 3");
-    callback(result);
-  });
-}
-var findDocuments = function(db, callback) {
-  // Get the documents collection
-  var collection = db.collection('documents');
-  // Find some documents
-  collection.find({}).toArray(function(err, docs) {
-    console.log("Found the following records");
-    console.dir(docs)
-    callback(docs);
-  });
-}
+createTmpData();
+
+Active.insertMany(tmpArr,function(err, docs) {
+    if(err) {
+        console.log(err);
+    } else {
+        console.log('save sucessfully');
+        console.log(docs);
+    }
+})

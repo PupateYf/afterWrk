@@ -28,13 +28,32 @@ activeDAO.prototype.save = function(obj, callback, res) {
             console.log(err);
             callback(res, result)
         } else {
-            console.log('save sucessfully')
+            console.log('save successfully');
             var result = {
                 code : 1,
                 msg : '录入成功'
             }
-            callback(res, result)
+            callback(res, result);
         }
     });
 };
+
+activeDAO.prototype.find = function(conditions, fields, options, callback, res) {
+    var result;
+    Active.find(conditions, fields, options, function(err, obj){
+        if(err) {
+            console.log(err);
+            callback(res, result);
+        } else {
+            console.log('find successfully');
+            var result = {
+                code : 1,
+                data : obj,
+                msg : '查询成功'
+            }
+            callback(res, result);
+        }
+    });
+}
+
 module.exports = new activeDAO();

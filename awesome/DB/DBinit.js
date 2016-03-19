@@ -5,5 +5,5 @@
  * @date 2016-03-15
  */
  var mongoose = require('mongoose');
- mongoose.connect('mongodb://localhost/nodejs');
+ mongoose.connect('mongodb://localhost/afterWrk');
  exports.mongoose = mongoose;
