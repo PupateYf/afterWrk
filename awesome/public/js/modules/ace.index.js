@@ -25,11 +25,10 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
             obj.hot = true;
         }
     }
-    var geocoder;
-    AMap.plugin(['AMap.Geocoder'], function (){
-        geocoder = new AMap.Geocoder();
-    });
-    console.log(geocoder);
+    var geocoder = new AMap.Geocoder();
+
+
+
     var regeocoder = function(lnglatXY, item) {  //逆地理编码
         geocoder.getAddress(lnglatXY, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
