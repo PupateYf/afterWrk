@@ -26,7 +26,26 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
         }
     }
     var geocoder = new AMap.Geocoder();
-
+    var geolocation = new AMap.Geolocation();
+    var currentLntlat;
+    geolocation.getCurrentPosition();
+    AMap.event.addListener(geolocation, 'complete', function(result){
+        console.log(result);
+        //初始化当前位置
+        currentLntlat = new AMap.LngLat(result.position.lng, result.position.lat);
+        //初始化距离
+        var activeList = $scope.activeList;
+        for(var i = 0; i < activeList.length; i++) {
+            if(activeList[i].distance) continue;
+            else {
+                var Lntlat = activeList[i].locationXY.split('-');
+                $.extend(activeList[i],{
+                    distance : (currentLntlat.distance(Lntlat)/1000).toFixed(1)+'km'
+                });
+                $scope.$apply();
+            }
+        }
+    });
 
 
     var regeocoder = function(lnglatXY, item) {  //逆地理编码
