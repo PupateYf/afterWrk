@@ -25,6 +25,9 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
             obj.hot = true;
         }
     }
+    $scope.fnJoin = function (item) {
+        $scope.$broadcast('show-active-detail', item);
+    }
     var geocoder = new AMap.Geocoder();
     var geolocation = new AMap.Geolocation();
     var currentLntlat;
