@@ -16,5 +16,9 @@ router.post('/createActive', function (req, res, next) {
 router.post('/loadActive', function (req, res, next) {
     activeApi.loadActive(req, res, next);
 });
+router.get('/chat', function (req, res, next) {
+    console.log(req.params);
+})
+
 
 module.exports = router;

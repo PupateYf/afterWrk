@@ -10,7 +10,7 @@ var express = require('express'),
     work = require('./routes/work'),
     app = express();
 
-//mongoDB
+var io = require('socket.io')
 
 
 
@@ -22,10 +22,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//socket.io
+
+
+
 // route
 app.use('/', routes);
 app.use('/users', users);
 app.use('/work', work);
+
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -45,6 +54,24 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
 });
+
+
+
+//for io
+var debug = require('debug')('generated-express-app');
+var port = ('3000');
+app.set('port', port);
+
+
+var server = app.listen(app.get('port'), function() {
+    console.log('listen on ', app.get('port'));
+    debug('Express server listening on port ' + server.address().port);
+});
+
+var io = require('socket.io').listen(server);
+var ioApi = require('./api/chatApi');
+
+ioApi.init(io).ioInitSocket();
 
 
 

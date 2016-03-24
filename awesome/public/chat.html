@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="chat">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no">
+  <title>chat-beta</title>
+  <script src="components/jquery/dist/jquery.min.js"></script>
+  <script src="components/angular/angular.min.js"></script>
+  <script src="components/socket.io.js"></script>
+  <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+      .chatSend{
+          position: fixed;
+          bottom: 0;
+      }
+  </style>
+
+</head>
+<body ng-controller="chatController" ng-init="init()">
+  <div>
+      <div ng-repeat="item in chatContent track by $index">
+          {{item.msg}}
+      </div>
+  </div>
+  <div class="input-group chatSend">
+        <input type="text" class="form-control" ng-model="content2Send" placeholder="input to chat" aria-describedby="send">
+        <span class="input-group-addon" id="send" ng-click="sendChat()">发送</span>
+  </div>
+</body>
+
+  <script>
+      var chat = angular.module('chat',[]);
+      chat.controller('chatController',['$scope', function ($scope) {
+          var activeId = "testId";
+          //聊天的内容
+          $scope.chatContent = [];
+          //发送的内容
+          $scope.content2Send
+          var socket;
+          //$scope.chatContent = [{account:13580353945, message:'this is an message'}];
+          //初始化聊天室
+          var from = 13580353945;
+          //var from = $.cookie('account')
+          $scope.init = function(){
+              console.log('init');
+              socket = io.connect(location.host + '/' + activeId);
+              //通知系统账户上线
+              socket.emit('online', {user : from});
+              socket.on('online', function(data){
+                  // if(data.user === from) return;
+                  // else {
+                      console.log('Welcome user '+ data.user);
+                  // }
+              })
+              socket.on('userMsg', function (data) {
+                console.log(data);
+                $scope.chatContent.push(data);
+                console.log($scope.chatContent);
+                $scope.$apply();
+              })
+              // socket.on('serverMsg',function(data){
+              //   console.log(data)
+              // })
+          }
+          $scope.sendChat = function (msg) {
+              socket.emit('userMsg',{msg : $scope.content2Send});
+              $scope.content2Send = '';
+          }
+      }])
+  </script>
+</html>
