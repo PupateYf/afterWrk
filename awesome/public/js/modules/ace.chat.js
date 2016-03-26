@@ -4,7 +4,8 @@ var aceActDetail = angular.module('ace.chat');
 
 aceActDetail.controller('aceChatController', ['$scope', '$http', function ($scope, $http) {
     //UI
-    $scope.id;
+    $scope.id = 'test';
+
     var fnChatConnect = function () {
         var method = 'GET';
     }

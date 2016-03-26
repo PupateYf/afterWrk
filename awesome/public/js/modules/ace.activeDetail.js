@@ -13,20 +13,7 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
 
     //加入群聊
     $scope.fnJoinChat = function(){
-        $scope.$broadcast('start-chat',$scope.activeId);
-        fnChatConnect();
-    }
-    var fnChatConnect = function () {
-        var method = 'GET';
-        var url = '/work/chat?activeid=' + $scope.activeId;
-        $http({
-            method : method,
-            url : url
-        }).then(function(response){
-
-        },function(err){
-
-        });
+        // $scope.$broadcast('start-chat',$scope.activeId);
     }
 
 

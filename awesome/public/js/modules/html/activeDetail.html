@@ -19,40 +19,87 @@
                     <div>
                         <img ng-src="upload/activeBanner/{{item.imgName}}"/>
                     </div>
-                    <div>{{item.topic}}</div>
+                    <div class="topic">{{item.topic}}</div>
                 </div>
 
                 <div class="creator">
                     <ul>
-                        <li>{{item.account}}</li>
-                        <li>{{item.gender}}</li>
-                        <li>{{item.count}}</li>
+                        <!-- 头像 -->
+                        <li class="user-img">
+                            <img ng-src="upload/user/13580353945.png"/>
+                            <span class="user-name">user.name</span>
+                            <span class="user-flag">发起人</span>
+                          </li>
+                        <li>
+                            <span class="detail-title fa fa-user"> 邀请对象: </span>
+                            <span class="detail-holder">{{item.gender}}</span>
+                        </li>
+                        <li><span class="detail-title fa fa-user-plus"> 邀请人数: </span>
+                            <span class="detail-holder">{{item.count}}</span>
+                        </li>
                     </ul>
                 </div>
 
-                <div class="location">{{item.address}}{{item.distance}}</div>
+                <div class="location">{{item.address}}<span class="distance">{{item.distance}}</span></div>
 
                 <div class="member">
-                    <div>
-                        <span class="members_count">{{item.whoIn.length}}</span>
-                        <span class="members_icons" ng-repeat="user in item.whoIn"><img ng-src="upload/user/{{user}}"/></span>
+                    <span class="title">报名成员:</span>
+                    <div class="users-holder">
+                        <span class="user-img" ng-repeat="user in item.whoIn"><img ng-src="upload/user/{{user}}"/></span>
                     </div>
-                    <a href="#" ng-click="fnJoinChat()">在线聊天</a>
+                    <a class="btn btn-xs btn-info chat-btn" href="javascript:;" ng-click="" data-template-url="js/modules/html/activeChat.html" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body">在线聊天</a>
                 </div>
 
                 <div class="profie">
-                    {{item.profile}}
+                    <span class="title">活动详情:</span>
+                    <div>
+                        <p>{{item.profile}}</p>
+                    </div>
+                </div>
+                <div class="active-detail-footer">
+                    <span>100元{{item.coust}}</span>
+                    <a href="#" class="btn btn-success">参加活动</a>
                 </div>
             </section>
             <!-- footer -->
-            <div class="active-detail-footer">
-                {{item.coust}}
-            </div>
+
 
         </div>
     <style type="text/css">
+    .aside .aside-dialog .aside-header {border-bottom: none;height: 1.1rem;min-height: auto;position: fixed;z-index:999;background: #000000;color: #FFFFFF;top: 0;width: 100%;max-width: 640px;}
 
+    .active-detail{position: relative;top: 1rem;padding-top: 6px;}
+    section{background:#f5f5f5}
+    .banner,.creator,.location,.member,.profie,.active-detail-footer{background:white;margin-bottom:.2rem;position:relative;padding:.1rem}
+    .banner .topic{font-weight: bold;padding: .1rem;}
+    .banner{padding:0}
+    .creator ul {list-style: none;padding: .3rem .2rem;margin:0}
+    .creator ul li {margin-bottom: .1rem}
+    .creator ul li:last-child{margin-bottom:0;}
+    .creator .user-img img{width:.8rem;height:.8rem;border-radius:50%;}
+    .creator .user-name{display: inline-block;font-size: .35rem;height: .8rem;line-height: .8rem;font-weight: bold;vertical-align: middle;padding-left: .2rem;}
+    .creator .user-flag{display: inline-block;font-size: .24rem;height: .45rem;background: black;color: white;padding: 0 .1rem;border-radius: .1rem;box-sizing: content-box;line-height: .45rem;}
+    .creator .detail-title{padding-left:.1rem;font-size:.32rem}
+    .creator .detail-title:before{display:inline-block;width:.4rem};
+    .creator .detail-holder{}
 
+    .location{padding:.2rem}
+    .location .distance{float:right}
+
+    .member{padding:.2rem;padding-bottom:.1rem}
+    .member .title{font-size: .35rem;font-weight: bold;}
+    .member .users-holder{padding: .2rem 0;margin-bottom: .15rem;border-bottom: 1px solid #F1F1F1;}
+    .member .members_count{vertical-align: middle;display: inline-block;width: .5rem;height: .5rem;text-align: center;box-sizing: border-box;border-radius: 50%;vertical-align: middle;background: black;font-size: .34rem;color: white;line-height: .5rem;}
+    .member .user-img {display: inline-block;margin-right:.12rem;vertical-align: middle;margin-bottom: .12rem;}
+    .member .user-img img{width:.7rem;height:.7rem;border-radius:50%;}
+    .member .chat-btn{position: relative;left: 50%;transform: translateX(-50%);}
+
+    .profie{padding:.2rem}
+    .profie .title{font-size: .35rem;font-weight: bold;}
+
+    .active-detail-footer{padding: .2rem;margin: 0;text-align: right}
+    .active-detail-footer span{width: 30%;text-align: center;display: inline-block;font-size: .4rem;font-weight: bold;vertical-align: middle;line-height: .4rem;}
+    .active-detail-footer a{width:65%;}
     </style>
     </div>
 </div>
