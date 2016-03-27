@@ -71,7 +71,7 @@ var server = app.listen(app.get('port'), function() {
 var io = require('socket.io').listen(server);
 var ioApi = require('./api/chatApi');
 
-ioApi.init(io).ioInitSocket();
+ioApi.init(io);
 
 
 

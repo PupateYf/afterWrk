@@ -30,13 +30,13 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 	};
 	//submit function
 	$scope.fnSubmit = function (str) {
-		if(!$scope.permission) return;
 		if(str == 'login'){
 			$.extend($scope.oAjaxConfig,{
 				url : '/users/login',
 				data : $scope.loginData
 			});
 		} else {
+			if(!$scope.permission) return;
 			$.extend($scope.oAjaxConfig,{
 				url : '/users/signup',
 				data : $scope.signupData

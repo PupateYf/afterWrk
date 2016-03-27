@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/login', function (req, res, next) {
-	debug ? console.log('[login:]call') : {};
+	console.log('[login:]call');
 	userDao.login(req, res, next);
 })
 

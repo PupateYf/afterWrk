@@ -15,6 +15,7 @@ aceMain.controller('mainController', ['$scope', '$rootScope', '$http', function 
         messageSelected : false,
         userSelected : false
     }
+
     $rootScope.fnNavSelect = function (str) {
         var obj = $rootScope.oNav;
         switch (str) {

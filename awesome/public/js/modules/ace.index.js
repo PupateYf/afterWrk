@@ -26,7 +26,8 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
         }
     }
     $scope.fnJoin = function (item) {
-        $scope.$broadcast('show-active-detail', item);
+        console.log('show-active-detail broadcast');
+        // $scope.$broadcast('show-active-detail', item);
     }
     var geocoder = new AMap.Geocoder();
     var geolocation = new AMap.Geolocation();

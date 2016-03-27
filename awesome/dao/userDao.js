@@ -11,6 +11,61 @@ var	sqlite3 = require('sqlite3').verbose(),
 		Alidayu = require('alidayujs'),
 		md5 = require('md5');
 
+var mongodb = require('../DB/DBinit');
+var Schema = mongodb.mongoose.Schema;
+var todoScheme = new Schema({
+    account    : {type : String},
+    userImg    : {type : String},
+    userName   : {type : String},
+    birthday   : {type : Number},
+    inersting  : {type : String},
+    location   : {type : String},
+    description: {type : String},
+    gender     : {type : Number},
+})
+
+var User = mongodb.mongoose.model('user',todoScheme);
+var userDao = function(){};
+userDao.prototype.save = function(obj, callback, res) {
+    var instance = new User(obj);
+    var result;
+    instance.save(function(err){
+        if(err) {
+            console.log(err);
+            callback(res, result)
+        } else {
+            console.log('save successfully');
+            var result = {
+                code : 1,
+                msg : '录入成功'
+            }
+            res.cookie('userName', obj.userName, { expires: new Date(Date.now() + 15*60*1000)});
+            res.cookie('userImg', obj.userImg, { expires: new Date(Date.now() + 15*60*1000)});
+            callback(res, result);
+        }
+    });
+};
+
+userDao.prototype.findOne = function(conditions, fields, options, callback, res) {
+    var result;
+    User.findOne(conditions, fields, options, function(err, obj){
+        if(err) {
+            console.log(err);
+            callback(res, result);
+        } else {
+            console.log('find successfully');
+            console.log(obj);
+            var result = {
+                code : 1,
+                data : obj,
+                msg : '查询成功'
+            }
+            res.cookie('userName', obj.userName, { expires: new Date(Date.now() + 15*60*1000)});
+            res.cookie('userImg', obj.userImg, { expires: new Date(Date.now() + 15*60*1000)});
+            callback(res, result);
+        }
+    });
+}
 
 var $sql = {
 		insert : 'INSERT INTO user(account,password,whenIn) VALUES(?,?,?)',
@@ -26,6 +81,7 @@ module.exports = {
 	// 登陆
   login: function (req, res, next) {
 	  // get param
+	  var that = this;
 	  var param = req.body;
     // get DB connection
 		var db = new sqlite3.Database(DBname);
@@ -50,14 +106,15 @@ module.exports = {
 					}
 					res.cookie('account', row.account, { expires: new Date(Date.now() + 15*60*1000)});
 					res.cookie('awId', row.whenIn, { expires: new Date(Date.now() + 15*60*1000)});
+					that.findUserDetail(row.account,res)
 				} else {
 					// 密码错误
 					result = {
 						code : 0,
 						msg : '密码错误'
 					}
+					$util.jsonWrite(res, result);
 				}
-				$util.jsonWrite(res, result);
 			} else {
 				var result = {
 					 code : 0,
@@ -72,6 +129,7 @@ module.exports = {
   signup : function (req, res, next) {
 			debug ? console.log('[signup]:call') : {};
 			// get param
+			var that = this;
 			var param = req.body;
 			var validCode = req.cookies.validCode;
 			// 比对验证码
@@ -93,6 +151,7 @@ module.exports = {
 						code : -100,
 						msg : '数据库错误'
 					}
+					$util.jsonWrite(res, result);
 				} else {
 					debug ? console.log('[login sqlite3]:执行INSERT') : console.log('');
 					result = {
@@ -101,17 +160,18 @@ module.exports = {
 					}
 					res.cookie('account', param.account, { expires: new Date(Date.now() + 15*60*1000)});
 					res.cookie('awId', now, { expires: new Date(Date.now() + 15*60*1000)});
+					that.initUserDetail(param.account,res)
 				}
 				db.close();
-				$util.jsonWrite(res, result);
 			});
 		},
 	// 通过cookie判断是否已经登陆
   checkLogin : function (req, res, next) {
+		 var that = this;
 		 // get cookies
 		 var param = req.cookies;
 		 // get DB connection
-     var db = new sqlite3.Database(DBname);
+     	 var db = new sqlite3.Database(DBname);
 		 var result;
  		 db.get($sql.queryById, [param.account], function (err, row){
 	 			if(err){
@@ -133,14 +193,15 @@ module.exports = {
 	 					}
 	 					res.cookie('account', row.account, { expires: new Date(Date.now() + 15*60*1000)});
 	 					res.cookie('awId', row.whenIn, { expires: new Date(Date.now() + 15*60*1000)});
+	 					that.findUserDetail(row.account,res)
 	 				} else {
 	 					// 密码错误
 	 					result = {
 	 						code : 0,
 	 						msg : 'token fail to login'
 	 					}
+	 					$util.jsonWrite(res, result);
 	 				}
-	 				$util.jsonWrite(res, result);
 	 			} else {
 	 				var result = {
 	 					 code : 0,
@@ -148,7 +209,6 @@ module.exports = {
 	 				}
 	 				$util.jsonWrite(res, result);
 	 			}
-	 			db.close();
 	 		});
 	},
 	// 获取验证码
@@ -219,6 +279,28 @@ module.exports = {
 				});
 			}
 		});
-
-	}// End of getValidCode
+	},// End of getValidCode
+	initUserDetail : function(account, res){
+		var todoObj = {
+			    account    : account,
+			    userImg    : 'default.png',
+			    userName   : md5(account).toString().substr(0,7),
+			    birthday   : '',
+			    inersting  : '',
+			    location   : '',
+			    description: '',
+			    gender     : 0,
+		}
+		var User = new userDao();
+		User.save(todoObj, $util.jsonWrite, res);
+	},
+	findUserDetail : function(account, res){
+		var conditions = {
+			account : account.toString()
+		}
+		var fields = null,
+			options = {}
+		var User = new userDao();
+		User.findOne(conditions, fields, options, $util.jsonWrite, res)
+	}
 }

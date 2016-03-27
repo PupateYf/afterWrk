@@ -47,7 +47,7 @@
                     <div class="users-holder">
                         <span class="user-img" ng-repeat="user in item.whoIn"><img ng-src="upload/user/{{user}}"/></span>
                     </div>
-                    <a class="btn btn-xs btn-info chat-btn" href="javascript:;" ng-click="" data-template-url="js/modules/html/activeChat.html" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body">在线聊天</a>
+                    <a class="btn btn-xs btn-info chat-btn" href="javascript:;" ng-click="fnJoinChat()" >在线聊天</a>
                 </div>
 
                 <div class="profie">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="active-detail-footer">
                     <span>100元{{item.coust}}</span>
-                    <a href="#" class="btn btn-success">参加活动</a>
+                    <a href="#" class="btn btn-success" ng-click="joinActive()">参加活动</a>
                 </div>
             </section>
             <!-- footer -->

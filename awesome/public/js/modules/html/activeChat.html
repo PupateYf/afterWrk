@@ -2,71 +2,43 @@
     <div class="aside-dialog">
         <div class="aside-content">
             <!-- header -->
-            <div class="aside-header" ng-show="id">
+            <div class="aside-header" ng-show="activeId">
                 <button type="button" class="close" ng-click="$hide();">
                   ×
                 </button>
-                <h4 class="aside-title" ng-show="id">
+                <h4 class="aside-title" ng-show="activeId">
                 	临时聊天窗口
                 </h4>
             </div>
             <!-- activeContent -->
             <section class="active-chat">
+
                 <div>
-                    <div class="chat-stream">
-                        <div class="self">
+                    <div class="chat-stream" ng-repeat="item in chatContent">
+                        <!-- 用户信息 -->
+                        <div ng-class="{'self':item.userid==from}" ng-if="item.kind==1">
                             <div>
                                 <span class="user-img">
-                                    <img ng-src="upload/user/13580353945.png"/>
+                                    <img ng-src="upload/user/{{item.userImg}}"/>
                                 </span>
-                                <span class="user-name">user.name</span>
-                            </div>
-                            <div class="chat-msg">
-                                <p>this is an message</p>
+                                <span class="user-name">{{item.userName}}</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="chat-stream">
-                        <div>
-                            <span class="user-img">
-                                <img ng-src="upload/user/13798111091.png"/>
-                            </span>
-                            <span class="user-name">user.name</span>
-                        </div>
-                        <div class="chat-msg">
-                            <p>this is an other message</p>
+                        <!-- 系统信息 -->
+                        <div class="sever-msg" ng-if="item.kind!=1">
+                            <p>{{item.msg}}</p>
                         </div>
                     </div>
-
-                    <div class="chat-stream">
-                        <div class="sever-msg">
-                            <p>sever mssage</p>
-                        </div>
-                    </div>
-                    
                 </div>
 
+                </div>
             </section>
             <div class="input-group chatSend">
                   <input type="text" class="form-control" ng-model="content2Send" placeholder="input to chat" aria-describedby="send">
                   <span class="input-group-addon" id="send" ng-click="sendChat()">发送</span>
             </div>
-            <!-- <section class="active-chat">
-                <div>
-                    <div ng-repeat="item in chatContent track by $index">
-                        {{item.msg}}
-                    </div>
-                </div>
-                <div class="input-group chatSend">
-                      <input type="text" class="form-control" ng-model="content2Send" placeholder="input to chat" aria-describedby="send">
-                      <span class="input-group-addon" id="send" ng-click="sendChat()">发送</span>
-                </div>
-            </section> -->
-            <!-- footer -->
-
-
         </div>
+
         <style>
             /*.wrap{margin:0 auto;max-width: 640px;min-width: 320px;position: relative;height:100%}
             .wrap img{width: 100%}*/

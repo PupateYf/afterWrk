@@ -1,7 +1,9 @@
 var express = require('express'),
-    router = express.Router();
-    activeApi = require('../api/activeApi');
-var debug = true;
+    router = express.Router(),
+    activeApi = require('../api/activeApi'),
+    chatApi = require('../api/chatApi');
+
+
 router.get('/', function (req,res,next) {
     res.send('respond with a resource');
 });
@@ -17,7 +19,7 @@ router.post('/loadActive', function (req, res, next) {
     activeApi.loadActive(req, res, next);
 });
 router.get('/chat', function (req, res, next) {
-    console.log(req.params);
+    chatApi.ioCreateRooms(req, res, next);
 })
 
 

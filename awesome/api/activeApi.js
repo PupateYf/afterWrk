@@ -15,8 +15,8 @@ var	$util = require('../util/util'),
 
 module.exports = {
     createActive : function (req, res, next) {
-        var account = '13580353945'; // for test
-        // var account = req.cookies.account;
+        // var account = '13580353945'; // for test
+        var account = req.cookies.account;
         var param = req.body;
         var todoObj = {
                 account    : account,

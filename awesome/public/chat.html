@@ -9,6 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>chat-beta</title>
   <script src="components/jquery/dist/jquery.min.js"></script>
+  <script src="components/jquery.cookie/jquery.cookie.js"></script>
   <script src="components/angular/angular.min.js"></script>
   <script src="components/socket.io.js"></script>
   <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
@@ -39,41 +40,30 @@
 
 </head>
 <body class="wrap" ng-controller="chatController" ng-init="init()">
-  <section class="active-chat">
-      <div>
-          <div class="chat-stream">
-              <div class="self">
-                  <div>
-                      <span class="user-img">
-                          <img ng-src="upload/user/13580353945.png"/>
-                      </span>
-                      <span class="user-name">user.name</span>
+    <section class="active-chat">
+          <div>
+              
+              <div class="chat-stream" ng-repeat="item in chatContent track by $index">
+                  <!-- 用户信息 -->
+                  <div ng-class="{'self':item.userid==from}" ng-if="item.kind==1">
+                          <div>
+                            <span class="user-img">
+                                <img ng-src="upload/user/{{item.userImg}}"/>
+                            </span>
+                            <span class="user-name">{{item.userName}}</span>
+                          </div>
+                          <div class="chat-msg">
+                                <p>{{item.msg}}</p>
+                          </div>
                   </div>
-                  <div class="chat-msg">
-                      <p>this is an message</p>
+                  <!-- 系统信息 -->
+                  <div class="sever-msg" ng-if="item.kind=='sever'">
+                      <p>{{item.msg}}</p>
                   </div>
               </div>
           </div>
-
-          <div class="chat-stream">
-              <div>
-                  <span class="user-img">
-                      <img ng-src="upload/user/13798111091.png"/>
-                  </span>
-                  <span class="user-name">user.name</span>
-              </div>
-              <div class="chat-msg">
-                  <p>this is an other message</p>
-              </div>
-          </div>
-          <div class="chat-stream">
-              <div class="sever-msg">
-                  <p>sever mssage</p>
-              </div>
-          </div>
-      </div>
-
-  </section>
+        </div>
+    </section>
   <div class="input-group chatSend">
         <input type="text" class="form-control" ng-model="content2Send" placeholder="input to chat" aria-describedby="send">
         <span class="input-group-addon" id="send" ng-click="sendChat()">发送</span>
@@ -127,42 +117,77 @@
   </script>
   <script>
       var chat = angular.module('chat',[]);
-      chat.controller('chatController',['$scope', function ($scope) {
+      chat.controller('chatController',['$scope', '$http', function ($scope, $http) {
           var activeId = "testId";
           //聊天的内容
           $scope.chatContent = [];
           //发送的内容
-          $scope.content2Send
+          $scope.content2Send;
           var socket;
           //$scope.chatContent = [{account:13580353945, message:'this is an message'}];
           //初始化聊天室
-          var from = 13580353945;
-          //var from = $.cookie('account')
+          var userImg = $.cookie('userImg');
+          var userName = $.cookie('userName');
+          $scope.activeId = location.search.substr(10);
+          $scope.from = $.cookie('account')
           $scope.init = function(){
               console.log('init');
-              socket = io.connect(location.host + '/' + activeId);
               //通知系统账户上线
-              socket.emit('online', {user : from});
-              socket.on('online', function(data){
-                  // if(data.user === from) return;
-                  // else {
-                      console.log('Welcome user '+ data.user);
-                  // }
-              })
-              socket.on('userMsg', function (data) {
-                console.log(data);
-                $scope.chatContent.push(data);
-                console.log($scope.chatContent);
-                $scope.$apply();
-              })
+              fnChatConnect();
               // socket.on('serverMsg',function(data){
               //   console.log(data)
               // })
           }
-          $scope.sendChat = function (msg) {
-              socket.emit('userMsg',{msg : $scope.content2Send});
+          function fnInitSocket (){
+              socket = io.connect(location.host + '/' + $scope.activeId);
+              //通知系统账户上线
+              socket.emit('online', {user : $scope.from,userName : userName});
+              socket.on('online', function(data){
+                  console.log(data);
+                  if(data.fromId === $scope.from) return;
+                  else {
+                        $scope.chatContent.push(data);
+                        $scope.$apply();
+                  }
+              });
+              //监听即时信息
+              socket.on('userMsg', function (data) {
+                  console.log(data);
+                      $scope.chatContent.push(data);
+                      $scope.$apply();
+                  });
+          }
+          function fnChatConnect(){
+              var method = 'GET';
+              var url = 'work/chat?activeId='+$scope.activeId;
+              // $rootScope.chatId = $scope.activeId
+              fnInitSocket();
+              $http({
+                method : method,
+                url : url
+              }).then(function(response){
+                //成功则调用socket初始化
+                if(response.data.code === 1);
+                else if(response.data.code === -1){
+                  console.log('不被允许的访问源')
+                };
+              },function(error){
+                console.log(error);
+              })
+          }
+
+          $scope.sendChat = function () {
+              var msgData = {
+                userid : $scope.from,
+                userImg : userImg,
+                userName : userName,
+                msg : $scope.content2Send,
+                kind : 1 //1 means user
+              }
+              socket.emit('userMsg',msgData);
               $scope.content2Send = '';
           }
+
       }])
   </script>
 </html>
