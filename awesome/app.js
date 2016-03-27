@@ -8,6 +8,7 @@ var express = require('express'),
     routes = require('./routes/index'),
     users = require('./routes/users'),
     work = require('./routes/work'),
+    admin = require('./routes/admin'),
     app = express();
 
 var io = require('socket.io')
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/work', work);
+app.use('/admin', admin);
 
 
 

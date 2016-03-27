@@ -108,5 +108,12 @@ module.exports = {
             options = requrest.options;
         // res.json({code:1});
         Active.find(conditions, fields, options, $util.jsonWrite, res);
+    },
+    joinActive : function (req, res, next) {
+        console.log('[POST]:joinActive call');
+        var requrest = req.body;
+        var conditions = requrest.conditions,
+            set = requrest.set;
+        Active.update(conditions, set, $util.jsonWrite, res);
     }
 }

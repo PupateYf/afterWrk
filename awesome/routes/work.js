@@ -21,6 +21,9 @@ router.post('/loadActive', function (req, res, next) {
 router.get('/chat', function (req, res, next) {
     chatApi.ioCreateRooms(req, res, next);
 })
+router.post('/joinActive', function (req, res, next) {
+	activeApi.joinActive(req, res, next);
+})
 
 
 module.exports = router;

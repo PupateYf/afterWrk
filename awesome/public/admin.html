@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="admin">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>aftWrk 后台管理</title>
+
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script src="components/jquery.cookie/jquery.cookie.js"></script>
+    <script src="components/angular/angular.min.js"></script>
+    <script src="components/angular-route/angular-route.min.js"></script>
+    <script src="components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+    <script src="js/admin.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
+
+
+  </head>
+  <body ng-controller="mainCtr" ng-init="checkLogin()">
+      <div ng-view>
+      </div>
+  </body>
+
+
+</html>

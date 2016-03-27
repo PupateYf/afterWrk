@@ -32,7 +32,7 @@ body{background-color: #f5f5f5}
         <div class="content_footer">
             <div>
               <span class="members_count">{{item.whoIn.length}}</span>
-              <span class="members_icons" ng-repeat="user in item.whoIn | limitTo : 9"><img ng-src="upload/user/{{user}}"/></span>
+              <span class="members_icons" ng-repeat="user in item.whoIn track by $index | limitTo : 9"><img ng-src="upload/user/{{user}}"/></span>
             </div>
             <a href="javascript:;" class="btn btn-link join_in" ng-click="fnJoin(item)" data-template-url="js/modules/html/activeDetail.html" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body">参与</a>
             <span class="fa fa-map-marker content_location">{{fnSetLocation(item);item.address}} {{item.distance}}</span>

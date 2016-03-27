@@ -55,5 +55,22 @@ activeDAO.prototype.find = function(conditions, fields, options, callback, res) 
         }
     });
 }
+activeDAO.prototype.update = function(conditions, set, callback, res) {
+    var result;
+    var dbSet = {$set : set};
+    Active.update(conditions, dbSet, function(err, count){
+        if(err) {
+            console.log(err);
+            callback(res, result);
+        } else {
+            console.log('update successfully in',count);
+            var result = {
+                code : 1,
+                msg : '参加成功'
+            }
+            callback(res, result);
+        }
+    });
+}
 
 module.exports = new activeDAO();
