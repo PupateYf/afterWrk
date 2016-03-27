@@ -18,6 +18,10 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
 				templateUrl : 'js/modules/html/index.html',
 				controller	: 'indexController'
 		})
+		.when('/news', {
+				templateUrl : 'js/modules/html/news.html',
+				controller  : 'newsController'
+		})
 		.when('/createActive', {
 				templateUrl : 'js/modules/html/createActive.html',
 				controller  : 'activeController'

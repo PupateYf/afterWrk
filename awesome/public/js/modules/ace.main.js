@@ -57,9 +57,14 @@ aceMain.controller('mainController', ['$scope', '$rootScope', '$http', function 
            case 1: {
              console.log(data.msg);
              switch (window.location.hash) {
-               case '#/index':
+               case '#/index':{
                  $rootScope.oNav.homeSelected = true;
                  break;
+               }
+               case '#/news':{
+                 $rootScope.oNav.photoSelected = true;
+                 break;
+               }
              }
              break;
            }

@@ -1,7 +1,8 @@
 var express = require('express'),
     router = express.Router(),
     activeApi = require('../api/activeApi'),
-    chatApi = require('../api/chatApi');
+    chatApi = require('../api/chatApi'),
+    newsApi = require('../api/newsApi');
 
 
 router.get('/', function (req,res,next) {
@@ -24,6 +25,8 @@ router.get('/chat', function (req, res, next) {
 router.post('/joinActive', function (req, res, next) {
 	activeApi.joinActive(req, res, next);
 })
-
+router.post('/getNews', function (req, res, next) {
+	newsApi.getNews(req, res, next);
+})
 
 module.exports = router;

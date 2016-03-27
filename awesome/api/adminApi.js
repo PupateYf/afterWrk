@@ -16,10 +16,13 @@ module.exports = {
 	},
 	sendNews : function (req, res, next) {
 		var request = req.body;
+		var now = new Date();
+		var time = [now.getFullYear(),now.getMonth(),now.getDate()].join('-')+' '+now.getHours()+':'+now.getMinutes();
 		console.log(request);
 		var conditions = {
 			title : request.title,
-			content : request.content
+			content : request.content,
+			time : time
 		}
 		News.save(conditions);
 		$util.jsonWrite(res,{code:1})
