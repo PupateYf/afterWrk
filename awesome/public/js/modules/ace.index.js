@@ -33,25 +33,6 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
     var geolocation = new AMap.Geolocation();
     var currentLntlat;
     geolocation.getCurrentPosition();
-    AMap.event.addListener(geolocation, 'complete', function(result){
-        console.log(result);
-        //初始化当前位置
-        currentLntlat = new AMap.LngLat(result.position.lng, result.position.lat);
-        //初始化距离
-        var activeList = $scope.activeList;
-        for(var i = 0; i < activeList.length; i++) {
-            if(activeList[i].distance) continue;
-            else {
-                var Lntlat = activeList[i].locationXY.split('-');
-                $.extend(activeList[i],{
-                    distance : (currentLntlat.distance(Lntlat)/1000).toFixed(1)+'km'
-                });
-                $scope.$apply();
-            }
-        }
-    });
-
-
     var regeocoder = function(lnglatXY, item) {  //逆地理编码
         geocoder.getAddress(lnglatXY, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
@@ -65,17 +46,47 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
 
         });
     }
-    $scope.fnSetLocation = function (item) {
-        if(item.addressGet) return;
-        else {
-            $.extend(item, {addressGet : true})
+    var getDistance = function(){
+        console.log('run getDistance()');
+        var activeList = $scope.activeList;
+        for(var i = 0; i < activeList.length; i++) {
+            if(activeList[i].distance) continue;
+            else {
+                var Lntlat = activeList[i].locationXY.split('-');
+                $.extend(activeList[i],{
+                    distance : (currentLntlat.distance(Lntlat)/1000).toFixed(1)+'km'
+                });
+
+            }
         }
-        var lnglatXY = item.locationXY.split('-');
-        regeocoder(lnglatXY, item);
     }
-    $scope.skipNum = 0; // 初始化数据库查询skip参数
+    AMap.event.addListener(geolocation, 'complete', function(result){
+        console.log(result);
+        //初始化当前位置
+        currentLntlat = new AMap.LngLat(result.position.lng, result.position.lat);
+        //初始化距离
+        getDistance();
+        $scope.$apply();
+    });
+
+
+
+    $scope.fnSetLocation = function () {
+        console.log('run fnSetLocation()');
+        var activeList = $scope.activeList;
+        for(var i = 0; i < activeList.length; i++) {
+            if(activeList[i].addressGet) continue;
+            else {
+                var Lntlat = activeList[i].locationXY.split('-');
+                regeocoder(Lntlat, activeList[i]);
+            }
+        }
+    }
+    // 初始化数据库查询skip参数
+    $scope.skipNum = 0;
+    $scope.loading = !1;
     //初始化首页活动过数据
-    $scope.fnLoadActive = function (skipNum) {
+    $scope.fnLoadActive = function (skipNum, callback) {
         var data = {
                 conditions : {},
                 fields : null,
@@ -95,7 +106,11 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
                 case 1:{
                     //请求成功，处理数据以供展示
                     console.log('ok');
-                    $scope.activeList = $scope.activeList.concat(response.data.data);
+                    $scope.loading = !1;
+  									$scope.activeList = $scope.activeList.concat(response.data.data);
+  									$scope.skipNum += 10;
+                    $scope.fnSetLocation();
+                    if(typeof callback == 'function') callback();
                     console.log('activeList', $scope.activeList);
                     break;
                 }
@@ -106,6 +121,10 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
         }, function(error){
             console.log(error);
         })
+    }
+    $scope.getMore = function(skipNum){
+        $scope.loading = !0;
+        $scope.fnLoadActive(skipNum,getDistance);
     }
     $scope.$on('$viewContentLoaded', function(){
     //Here your view content is fully loaded !!

@@ -19,7 +19,7 @@
                     <div>
                         <img ng-src="upload/activeBanner/{{item.imgName}}"/>
                     </div>
-                    <div class="topic">{{item.topic}}</div>
+                    <div class="topic">{{item.topic}}<span class="time">{{formatTime(item.datetime)}}</span></div>
                 </div>
 
                 <div class="creator">
@@ -56,7 +56,8 @@
                         <p>{{item.profile}}</p>
                     </div>
                 </div>
-                <div class="active-detail-footer">
+                {{parseInt(item.datetime)}}
+                <div class="active-detail-footer" ng-show="footerShow">
                     <span>100元{{item.coust}}</span>
                     <a href="javascript:;" class="btn btn-success" ng-if="!whetherJoin" ng-click="fnJoinActive()">参加活动</a>
                     <a href="javascript:;" class="btn btn-warning" ng-if="whetherJoin" ng-click="fnQuitActive()">退出活动</a>
@@ -73,6 +74,7 @@
     section{background:#f5f5f5}
     .banner,.creator,.location,.member,.profie,.active-detail-footer{background:white;margin-bottom:.2rem;position:relative;padding:.1rem}
     .banner .topic{font-weight: bold;padding: .1rem;}
+    .banner .time{color: #BBBBBB;float: right;}
     .banner{padding:0}
     .creator ul {list-style: none;padding: .3rem .2rem;margin:0}
     .creator ul li {margin-bottom: .1rem}

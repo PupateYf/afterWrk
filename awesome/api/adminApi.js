@@ -1,8 +1,9 @@
 var $util = require('../util/util'),
-	mongoose = require('mongoose'),
-	md5 = require('md5'),
-	Admin = require('../dao/adminDao'),
-	News = require('../dao/newsDao')
+		mongoose = require('mongoose'),
+		md5 = require('md5'),
+		Admin = require('../dao/adminDao'),
+		News = require('../dao/newsDao'),
+		Suggest = require('../dao/suggestDAO');
 
 module.exports = {
 	login : function(req, res, next) {

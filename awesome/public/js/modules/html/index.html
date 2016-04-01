@@ -13,6 +13,7 @@ body{background-color: #f5f5f5}
 .index_content .content_item .content_footer .members_etc{display:inline-block;width:.5rem;height:.5rem;text-align: center;border: 1px solid black;border-radius:50%;margin-top:.1rem}
 .index_content .content_item .content_footer .join_in{position:absolute;right: 0;bottom: .25rem}
 .index_content .content_item .content_footer .content_location{display: block;color:#dfdfdf;padding:.1rem}
+.index_content .getMore{padding:.1rem ;text-align: center;color:#ABABAB;background: white;margin-top: -.1rem;}
 .content_bottom_holder{width:100%;height:1rem;}
 </style>
 
@@ -37,10 +38,14 @@ body{background-color: #f5f5f5}
               <span class="members_icons" ng-repeat="user in item.whoIn track by $index | limitTo : 9"><img ng-src="upload/user/{{user}}"/></span>
             </div>
             <a href="javascript:;" class="btn btn-link join_in" ng-click="fnJoin(item)" data-template-url="js/modules/html/activeDetail.html" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body">参与</a>
-            <span class="fa fa-map-marker content_location">{{fnSetLocation(item);item.address}} {{item.distance}}</span>
+            <span class="fa fa-map-marker content_location">{{item.address}} {{item.distance}}</span>
         </div>
-    </div>
 
+
+    </div>
+    <div class="getMore">
+        <span class="" ng-click="getMore(skipNum)"> 更 多 <i class="fa fa-refresh" ng-class="{'fa-spin' : loading}"></i></span>
+    </div>
     <!-- demo -->
     <div class="content_item" style="display:none">
         <div class="content_title">单身狗不哭－－天河公园夜跑</div>

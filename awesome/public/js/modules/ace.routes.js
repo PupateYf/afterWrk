@@ -26,10 +26,15 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
 				templateUrl : 'js/modules/html/createActive.html',
 				controller  : 'activeController'
 		})
+		.when('/message', {
+				templateUrl : 'js/modules/html/message.html',
+				controller : 'messageController'
+		})
 		.when('/loginSignUp', {
 				templateUrl : 'js/modules/html/loginSignUp.html',
 				controller 	: 'loginSignUpController'
 		})
+
     .when('/sponsor', {
         templateUrl : 'js/modules/html/sponsor.html',
         controller  : 'sponsorController'

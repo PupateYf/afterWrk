@@ -4,7 +4,9 @@ var aceActDetail = angular.module('ace.activeDetail');
 
 aceActDetail.controller('actDetailController', ['$scope', '$http', function ($scope, $http) {
     //UI
+    $scope.now = new Date().getTime();
     $scope.item;
+    $scope.footerShow = $scope.now < $scope.item.datetime;
     $scope.activeId = parseInt($scope.item.imgName);
     $scope.whetherJoin;
     var userImg = $.cookie('userImg');
@@ -16,7 +18,7 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
         $scope.whetherJoin = false;
     }
 
-    
+
     console.log($scope.item.whoIn);
     //加入群聊
     $scope.fnJoinChat = function(){
@@ -58,6 +60,11 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
         },function(error){
             console.log(error);
         })
+    };
+    $scope.formatTime = function(time){
+        var date = new Date(parseInt(time));
+        var str = [date.getFullYear(),date.getMonth(),date.getDate()].join('-')+' '+date.getHours()+':'+ (date.getMinutes()>9 ? date.getMinutes() : '0' + date.getMinutes());
+        return str;
     }
 
 }])
