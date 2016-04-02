@@ -20,6 +20,9 @@ router.post('/createActive', function (req, res, next) {
 router.post('/loadActive', function (req, res, next) {
     activeApi.loadActive(req, res, next);
 });
+router.post('/reportActive', function (req, res, next) {
+    activeApi.reportActive(req, res, next);
+})
 router.get('/chat', function (req, res, next) {
     chatApi.ioCreateRooms(req, res, next);
 })

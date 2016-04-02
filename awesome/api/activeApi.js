@@ -11,8 +11,8 @@ var	$util = require('../util/util'),
  		md5 = require('md5'),
     fs = require('fs'),
     UPLOAD_DIR = '/activeBanner/',
-    Active = require('../dao/activeDao');
-
+    Active = require('../dao/activeDao'),
+    Report = require('../dao/reportDAO');
 module.exports = {
     createActive : function (req, res, next) {
         // var account = '13580353945'; // for test
@@ -115,5 +115,17 @@ module.exports = {
         var conditions = requrest.conditions,
             set = requrest.set;
         Active.update(conditions, set, $util.jsonWrite, res);
+    },
+    reportActive : function (req, res, next) {
+        console.log('[POST]:reportActive call');
+        var request = req.body;
+        var account = req.cookies.account;
+        var todoObj = {
+            reportActid : request.reportActid,
+            account : account,
+            time : new Date().getTime()
+        }
+        Report.save(todoObj);
+        $util.jsonWrite(res, {code : 1});
     }
 }

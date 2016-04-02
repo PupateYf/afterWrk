@@ -43,7 +43,6 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
             } else {
                 return 'Null';
             }
-
         });
     }
     var getDistance = function(){
@@ -56,7 +55,6 @@ aceIndex.controller('indexController', ['$scope', '$http', function ($scope, $ht
                 $.extend(activeList[i],{
                     distance : (currentLntlat.distance(Lntlat)/1000).toFixed(1)+'km'
                 });
-
             }
         }
     }

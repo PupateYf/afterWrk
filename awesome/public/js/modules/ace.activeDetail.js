@@ -9,6 +9,7 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
     $scope.footerShow = $scope.now < $scope.item.datetime;
     $scope.activeId = parseInt($scope.item.imgName);
     $scope.whetherJoin;
+    $scope.reportTip = !1;
     var userImg = $.cookie('userImg');
     for(var j = 0;j < $scope.item.whoIn.length; j++){
         if(userImg == $scope.item.whoIn[j]){
@@ -65,6 +66,22 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
         var date = new Date(parseInt(time));
         var str = [date.getFullYear(),date.getMonth(),date.getDate()].join('-')+' '+date.getHours()+':'+ (date.getMinutes()>9 ? date.getMinutes() : '0' + date.getMinutes());
         return str;
+    };
+    $scope.report = function(){
+        $http({
+            method : 'POST',
+            data : {
+                reportActid : [$scope.item.account,$scope.item.imgName].join('-'),
+            },
+            url : '/work/reportActive'
+        }).then(function(response){
+            if(response.data.code == 1){
+                $scope.reportTip = !0;
+                setTimeout(function(){$scope.reportTip = !1;$scope.$apply()},1000);
+            }
+        },function(error){
+            console.log(error);
+        })
     }
 
 }])

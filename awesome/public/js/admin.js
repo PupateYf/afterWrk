@@ -10,6 +10,10 @@ admin.config(['$routeProvider',function($routeProvider) {
 			templateUrl : 'js/adminModules/login.html',
 			controller 	: 'loginCtr'
 	})
+	.when('/manageActive', {
+			templateUrl : 'js/adminModules/manageActive.html',
+			controller : 'manageCtr'
+	})
 	.when('/sendNews',{
 			templateUrl : 'js/adminModules/sendNews.html',
 			controller  : 'sendNewsCtr'
@@ -90,35 +94,35 @@ admin.controller('sendNewsCtr',['$scope', '$http', function($scope, $http){
 }])
 //活动管理
 admin.controller('manageCtr',['$scope', '$http',function($scope, $http){
-	$scope.activeList=[];
-	$scope.fnLoadActive = function (skipNum) {
-        var data = {
-                conditions : {},
-                fields : null,
-                options : {}
-        }
-        var method = 'POST';
-        var url = '/work/loadActive';
-        $http({
-            url : url,
-            method : method,
-            data : data
-        }).then(function(response){
-            switch (response.data.code) {
-                case 1:{
-                    //请求成功，处理数据以供展示
-                    console.log('ok');
-                    $scope.activeList = $scope.activeList.concat(response.data.data);
-                    console.log('activeList', $scope.activeList);
-                    break;
-                }
-                default:{
-                    console.log('loadActive error');
-                }
-            }
-        }, function(error){
-            console.log(error);
-        })
+		$scope.activeList=[];
+		$scope.fnLoadActive = function (skipNum) {
+	        var data = {
+	                conditions : {},
+	                fields : null,
+	                options : {}
+	        }
+	        var method = 'POST';
+	        var url = '/work/loadActive';
+	        $http({
+	            url : url,
+	            method : method,
+	            data : data
+	        }).then(function(response){
+	            switch (response.data.code) {
+	                case 1:{
+	                    //请求成功，处理数据以供展示
+	                    console.log('ok');
+	                    $scope.activeList = $scope.activeList.concat(response.data.data);
+	                    console.log('activeList', $scope.activeList);
+	                    break;
+	                }
+	                default:{
+	                    console.log('loadActive error');
+	                }
+	            }
+	        }, function(error){
+	            console.log(error);
+	        })
     }
     $scopoe.remove = function(item){
     	var data = {
