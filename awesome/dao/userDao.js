@@ -66,6 +66,23 @@ userDao.prototype.findOne = function(conditions, fields, options, callback, res)
         }
     });
 }
+userDao.prototype.update = function(conditions, set, callback, res) {
+    var result;
+    var dbSet = {$set : set};
+    User.update(conditions, dbSet, function(err, count){
+        if(err) {
+            console.log(err);
+            callback(res, result);
+        } else {
+            console.log('update successfully in',count);
+            var result = {
+                code : 1,
+                msg : '修改成功'
+            }
+            callback(res, result);
+        }
+    });
+}
 
 var $sql = {
 		insert : 'INSERT INTO user(account,password,whenIn) VALUES(?,?,?)',
@@ -302,5 +319,12 @@ module.exports = {
 			options = {}
 		var User = new userDao();
 		User.findOne(conditions, fields, options, $util.jsonWrite, res)
+	},
+	updateUserDetail : function(req, res, next) {
+		var User = new userDao();
+		var request = req.body;
+		var conditions = request.conditions,
+				set = request.set;
+		User.update(conditions, set, $util.jsonWrite, res);
 	}
 }

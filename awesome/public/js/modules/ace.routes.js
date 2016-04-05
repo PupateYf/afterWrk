@@ -30,6 +30,10 @@ aceRouter.config(['$routeProvider',function($routeProvider) {
 				templateUrl : 'js/modules/html/message.html',
 				controller : 'messageController'
 		})
+		.when('/about', {
+				templateUrl : 'js/modules/html/about.html',
+				controller : 'aboutController'
+		})
 		.when('/loginSignUp', {
 				templateUrl : 'js/modules/html/loginSignUp.html',
 				controller 	: 'loginSignUpController'

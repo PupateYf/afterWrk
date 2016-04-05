@@ -26,4 +26,11 @@ router.post('/getValidCode', function (req, res, next) {
 	userDao.getValidCode(req, res, next);
 })
 
+router.post('/getUserInfo', function (req, res, next) {
+	userDao.findUserDetail(req.body.account, res);
+})
+
+router.post('/updateUserDetail', function (req, res, next) {
+	userDao.updateUserDetail(req, res, next);
+})
 module.exports = router;

@@ -2,7 +2,7 @@ AppConfig.registerModule('ace.loginSignUp');
 
 var aceLoginSignUp = angular.module('ace.loginSignUp');
 
-aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function ($scope, $http) {
+aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 	// UI
 	$scope.showLogin = false;
 	// 验证码
@@ -46,6 +46,7 @@ aceLoginSignUp.controller('loginSignUpController', ['$scope', '$http', function 
 		$http($scope.oAjaxConfig)
 		.then(function (data) {
 			var data = data.data;
+			$rootScope.USERDATA = data.data;
 			switch (data.code) {
       	case 1: {
 					console.log(data.msg);

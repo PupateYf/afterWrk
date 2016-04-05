@@ -1,0 +1,124 @@
+<style>
+body{background-color: #f5f5f5}
+.user_head{padding:.1rem .2rem;position:fixed;width:100%;max-width:640px;text-align:center;border-bottom:1px solid #f5f5f5;height: .9rem;background-color:white;z-index:999;}
+.user_head .appName{font-size: .34rem;font-weight: bold;line-height: .8rem;}
+.user_edit{ color: black;padding: .1rem;position: absolute;top: 0.1rem;right: 0.1rem;background: white;border-radius: .1rem;display: block;width: .5rem;height: .5rem;opacity: 0.5;}
+.user_save{position: absolute;top: 0.1rem;right: .1rem;padding: .1rem;color: white;font-weight: bold;border: 1px solid white;border-radius: .1rem;z-index: 999;}
+.user_content{position:relative;top:1rem;}
+
+.user-banner {position: relative}
+.user-banner img{width: 2.8rem;height: 2.8rem;border-radius: 50%;border: .1rem solid white;box-shadow: 0 0 .1rem #CCCCCC;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);}
+.user-head{height: 3.8rem;text-align: center;padding: .4rem;
+  opacity: 0;
+  -webkit-filter: blur(1rem); /* Chrome, Opera */
+         -moz-filter: blur(1rem);
+          -ms-filter: blur(1rem);
+              filter: blur(1rem);
+  -webkit-transition: opacity linear 0.8s;
+    transition: opacity linear 0.8s;}
+.user-banner-change{opacity: 1}
+.userDetail{background-color: white;position:relative;margin-bottom:.2rem;border-radius: .15rem;z-index: 9999}
+.userDetail ul{list-style: none;padding: 0;margin: 0;margin-bottom: .15rem;}
+.userDetail ul li {position:relative;font-size: .32rem;background: white;padding:.25rem .2rem;border-top: 1px solid #F1F1F1;}
+.userDetail .logOut{position: relative;float: right;line-height: .5rem;right: .2rem;}
+
+
+.userInput{border: none}
+.btnSelect{background: black;border-color: black;color: white;}
+.userSelect{display: inline-block;width: 80%}
+
+.user_content .content_title{font-weight: bold;font-size: .3rem;padding: .1rem;border-bottom: 1px solid #EAEAEA;}
+.user_content .content{padding: .1rem;color: #989898;}
+.user_content .content p{word-break: break-all}
+.user_content .time{font-size: .24rem;text-align: right;padding: .1rem;color: #A7A7A7;}
+
+.logoutHolder{height: 1rem;overflow: hidden;-webkit-transition: height linear 0.3s;
+  transition: height linear 0.3s;}
+.lobOutBtn{display: block;position: absolute;top:0;width:100%;height:1rem}
+.logoutShow{height: 2.3rem}
+.logout{color: #FF6161;border: 1px solid #ff6161;margin-top: .5rem;}
+
+.mask{background: rgba(0, 0, 0, 0.59);position: absolute;height: 200%;width: 100%;top: 0;}
+
+.aboutLoading{position: fixed;z-index: 9999;left: 50%;top: 41%;transform: translate(-50%);background: rgba(0, 0, 0, 0.55);width: 2rem;height: 2rem;color: white;text-align: center;line-height: 2rem;border-radius: .2rem;}
+
+.loading{height: 2rem;line-height: 2rem;}
+
+
+.footerHolder{text-align: center;margin-top: 1rem;color: #D4D4D4;}
+</style>
+
+<header class="user_head">
+    <!-- <span class="fa fa-map-marker fa-lg location">广州</span> -->
+    <!-- <div class="btn-group btn-group-sm" role="group" aria-label="...">
+      <button type="button" class="btn btn-default" ng-class="{'headerBtn' : oHeaderUI.neighbor}" ng-click="fnSetHeader(true)">最新</button>
+      <button type="button" class="btn btn-default" ng-class="{'headerBtn' : oHeaderUI.hot}" ng-click="fnSetHeader(false)">热门</button>
+    </div> -->
+    <div class="appName">下班后</div>
+</header>
+
+<section class="user_content">
+
+    <!-- demo -->
+    <div class="user-banner">
+        <div class="user-head" ng-style="bannerBG" ng-class="{'user-banner-change' : bannerChange}">
+        </div>
+        <img ng-src="upload/user/{{aboutContent.userImg}}"/>
+        <!-- <a href="javascript:;" class="fa fa-pencil user_edit"  data-template-url="js/modules/html/editAbout.html" data-animation="am-fade-and-slide-top" bs-modal="modal"></a> -->
+        <a href="javascript:;" class="fa fa-pencil user_edit" ng-if="!edit" ng-click="editMode()"></a>
+        <a href="javascript:;" class="fa fa-save user_save" ng-if="edit" ng-click="save()">保存</a>
+    </div>
+
+    <div class="userDetail">
+        <ul>
+            <li>
+                <span>昵称 : <span ng-show="!edit">{{aboutContent.userName}}</span>
+                    <input ng-show="edit" class="userInput" ng-model="aboutEditUserName" type="text" value="{{aboutContent.userName}}" autofocus>
+                </span>
+            </li>
+            <li>
+                <span>性别 : <span ng-show="!edit">{{aboutContent.gender}}</span>
+                    <div ng-show="edit" class="btn-group userSelect btn-group-justified" role="group" aria-label="kind">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" ng-class="{'btnSelect' : aboutEditGender === 0}" ng-click="setEditGender(0)">秘</button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" ng-class="{'btnSelect' : aboutEditGender === 1}" ng-click="setEditGender(1)">男</button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" ng-class="{'btnSelect' : aboutEditGender === 2}" ng-click="setEditGender(2)">女</button>
+                        </div>
+                    </div>
+                </span>
+            </li>
+            <li>
+                <span>生日 : <span ng-show="!edit">{{aboutContent.birthday}}</span>
+                    <span ng-show="edit">
+                        <input type="date" style="position: absolute;z-index: 999;opacity: 0;width:80%" ng-model="aboutEditBirthday" about-date-change>
+                        <input type="text" class="userInput" name="date" placeholder="请输入日期" ng-value="aboutUIBirthday">
+                    </span>
+                </span>
+            </li>
+            <li>
+                <span>个性签名 : <span ng-show="!edit">{{aboutContent.description}}</span>
+                    <input ng-show="edit" type="text" class="userInput" name="date" placeholder="请输入内容" value="{{aboutContent.description}}" ng-model="aboutEditDescription">
+                </span>
+            </li>
+            <li class="logoutHolder" ng-class="{'logoutShow' : logoutShow}">
+                <span class="userTitle">帐号注销<span class="fa fa-lg logOut" ng-class="{'fa-angle-down':!logoutShow,'fa-angle-up':logoutShow}"></span></span>
+                <div><a href="javascript:;" class="btn btn-block logout">退出登录</a></div>
+                <a href="javascript:;" ng-click="showLogout()" class="lobOutBtn"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="footerHolder">
+        由afterWrk提供技术支持
+    </div>
+    <div ng-class="{'mask':edit}"></div>
+    <div class="aboutLoading" ng-show="loading">
+        <div class="loading fa fa-refresh fa-spin fa-4x"></div>
+    </div>
+    <div class="content_bottom_holder"></div>
+</section>
+
+<div ng-include="'./js/modules/html/nav_bar.html'"></div>

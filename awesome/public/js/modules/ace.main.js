@@ -53,6 +53,7 @@ aceMain.controller('mainController', ['$scope', '$rootScope', '$http', function 
       }).then(function (data) {
          console.log(data);
          var data = data.data;
+         $rootScope.USERDATA = data.data;
          switch (data.code) {
            case 1: {
              console.log(data.msg);
