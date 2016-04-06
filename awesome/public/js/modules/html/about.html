@@ -44,6 +44,7 @@ body{background-color: #f5f5f5}
 
 .loading{height: 2rem;line-height: 2rem;}
 
+.about-upload-img{position: absolute;width: 3rem;height: 3rem;left: 50%;top: 9%;transform: translate(-50%);z-index: 99;opacity: 0;}
 
 .footerHolder{text-align: center;margin-top: 1rem;color: #D4D4D4;}
 </style>
@@ -64,6 +65,7 @@ body{background-color: #f5f5f5}
         <div class="user-head" ng-style="bannerBG" ng-class="{'user-banner-change' : bannerChange}">
         </div>
         <img ng-src="upload/user/{{aboutContent.userImg}}"/>
+        <input type="file" class="about-upload-img" nv-file-select="" uploader="uploader"/>
         <!-- <a href="javascript:;" class="fa fa-pencil user_edit"  data-template-url="js/modules/html/editAbout.html" data-animation="am-fade-and-slide-top" bs-modal="modal"></a> -->
         <a href="javascript:;" class="fa fa-pencil user_edit" ng-if="!edit" ng-click="editMode()"></a>
         <a href="javascript:;" class="fa fa-save user_save" ng-if="edit" ng-click="save()">保存</a>

@@ -8,7 +8,7 @@ var aceAbout = angular.module('ace.about');
 // location   : {type : String},
 // description: {type : String},
 // gender     : {type : Number},
-aceAbout.controller('aboutController',['$scope','$http','$rootScope', function($scope, $http, $rootScope) {
+aceAbout.controller('aboutController',['$scope','$http','$rootScope', 'FileUploader', function($scope, $http, $rootScope, FileUploader) {
 	$scope.aboutContent;
   $scope.bannerBG = {};
   $scope.bannerChange = !1;
@@ -105,7 +105,88 @@ aceAbout.controller('aboutController',['$scope','$http','$rootScope', function($
 			},function(error){
 					console.log(error);
 			})
-  }
+  };
+
+	var uploader = $scope.uploader = new FileUploader({
+      url: '/users/updateUserImg'
+  });
+	$scope.fileExtName;
+	$scope.setFileExtName = function (temp) {
+      var extName = '';
+      switch (temp) {
+        case 'image/pjpeg':
+          extName = 'jpg';
+          break;
+        case 'image/jpeg':
+          extName = 'jpg';
+          break;
+        case 'image/png':
+          extName = 'png';
+          break;
+        case 'image/x-png':
+          extName = 'png';
+          break;
+        case 'image/bmp':
+          extName = 'bmp';
+          break;
+        case 'image/gif':
+          extName = 'gif';
+          break;
+      }
+      $scope.fileExtName = extName;
+  };
+	uploader.filters.push({
+			name: 'imageFilter',
+			fn: function(item /*{File|FileLikeObject}*/, options) {
+					var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+					return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+			}
+	});
+	uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+			console.info('onWhenAddingFileFailed', item, filter, options);
+	};
+	uploader.onAfterAddingFile = function(fileItem) {
+			console.log('onAfterAddingFile',fileItem);
+			if(uploader.queue.length > 1){
+        uploader.queue.shift(0);
+      }
+			$scope.setFileExtName(fileItem.file.type);
+			uploader.queue[0].file.name = $.cookie('account');
+			console.log('imgname',uploader.queue[0].file.name);
+			uploader.uploadAll();
+	};
+	uploader.onAfterAddingAll = function(addedFileItems) {
+			console.info('onAfterAddingAll', addedFileItems);
+	};
+	uploader.onBeforeUploadItem = function(item) {
+			console.info('onBeforeUploadItem', item);
+	};
+	uploader.onProgressItem = function(fileItem, progress) {
+			console.info('onProgressItem', fileItem, progress);
+	};
+	uploader.onProgressAll = function(progress) {
+			console.info('onProgressAll', progress);
+	};
+	uploader.onSuccessItem = function(fileItem, response, status, headers) {
+			console.info('onSuccessItem', fileItem, response, status, headers);
+			if(response.code == 1){
+				  location.reload();
+			}
+	};
+	uploader.onErrorItem = function(fileItem, response, status, headers) {
+			console.info('onErrorItem', fileItem, response, status, headers);
+	};
+	uploader.onCancelItem = function(fileItem, response, status, headers) {
+			console.info('onCancelItem', fileItem, response, status, headers);
+	};
+	uploader.onCompleteItem = function(fileItem, response, status, headers) {
+			console.info('onCompleteItem', fileItem, response, status, headers);
+	};
+	uploader.onCompleteAll = function() {
+			console.info('onCompleteAll');
+	};
+	console.info('uploader', uploader);
+
 }])
 
 aceAbout.directive('aboutDateChange', function(){

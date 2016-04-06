@@ -10,7 +10,7 @@ var	$util = require('../util/util'),
     mongoose = require('mongoose');
  		md5 = require('md5'),
     fs = require('fs'),
-    UPLOAD_DIR = '/activeBanner/',
+    UPLOAD_DIR = 'public/upload/activeBanner/',
     Active = require('../dao/activeDao'),
     Report = require('../dao/reportDAO');
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
       console.log('[post]:upload method call');
       var quene = new formidable.IncomingForm();
           quene.encoding = 'utf-8';
-          quene.uploadDir = 'upload' + UPLOAD_DIR;
+          quene.uploadDir = UPLOAD_DIR;
           quene.keepExtensions = true;
           quene.maxFieldsSize = 5*1024*1024;
           quene.parse(req, function (err, fields, files) {
