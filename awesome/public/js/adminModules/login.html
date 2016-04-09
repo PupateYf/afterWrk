@@ -1,5 +1,6 @@
-<div>
-	<input type="text" ng-model="postContent.account" placeholder="account"/>
-	<input type="password" ng-model="postContent.password" palceholder="password"/>
-	<input type="button" ng-click="fnLogin()" class="btn btn-success" value="登陆">
+<div style="width: 300px;height: 200px;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);background: white;padding: 0 15px;text-align: center;border-radius: 10px;">
+	<h3 style="text-align:center">后台管理系统</h3>
+	<input type="text" class="form-control" ng-model="postContent.account" placeholder="account"/>
+	<input type="password" style="margin-top:10px;margin-bottom:10px" class="form-control" ng-model="postContent.password" placeholder="password"/>
+	<input type="button" ng-click="fnLogin()" class="btn btn-success btn-block" value="登陆">
 </div>

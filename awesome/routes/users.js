@@ -37,4 +37,12 @@ router.post('/updateUserDetail', function (req, res, next) {
 router.post('/updateUserImg', function (req, res, next) {
 	userDao.updateUserImg(req, res, next);
 })
+
+router.post('/loadUser', function (req, res, next) {
+	userDao.loadUser(req, res, next);
+})
+
+router.post('/removeUser', function (req, res, next) {
+	userDao.removeUser(req, res, next);
+})
 module.exports = router;

@@ -1,7 +1,7 @@
 AppConfig.registerModule('ace.createActive');
 var aceCreateActive = angular.module('ace.createActive');
 aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http', function($scope, FileUploader, $http) {
-
+  $scope.loading = false;
   var uploader = $scope.uploader = new FileUploader({
       url: '/work/uploadActiveImg'
   });
@@ -98,6 +98,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
   $scope.isOk = 0;
   $scope.errorMsg = '';
   $scope.fnSubimt = function () {
+    $scope.loading = true;
     console.log($scope.rawActiveData.topic);
     $.extend($scope.finalActiveData,{
       topic: $scope.rawActiveData.topic,
@@ -118,7 +119,8 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       console.log(res.data.code);
       $scope.isOk++;
       if($scope.isOk === 2){
-        // 此处需要跳转
+        $scope.loading = false;
+        location.href = "http://" + location.host + '/'
       }
     });
     // 通过共同变量isOk=2时 代表返回成功；
@@ -227,6 +229,8 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
       if(response.code === 1) $scope.isOk++;
       if($scope.isOk === 2){
         //此处需要跳转
+        $scope.loading = false;
+        location.href = "http://" + location.host + '/'
       }
       console.log('isOk is ',$scope.isOk);
   };

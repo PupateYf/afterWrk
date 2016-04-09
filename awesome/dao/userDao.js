@@ -48,6 +48,24 @@ userDao.prototype.save = function(obj, callback, res) {
     });
 };
 
+userDao.prototype.find = function (conditions, fields, options, callback, res) {
+		var result;
+		User.find(conditions, fields, options, function(err, obj) {
+				if(err) {
+						console.log(err);
+						callback(res, result);
+				} else {
+						console.log('find successfully');
+						var result = {
+								code : 1,
+								data : obj,
+								msg : '查询成功'
+						}
+						callback(res, result);
+				}
+		})
+}
+
 userDao.prototype.findOne = function(conditions, fields, options, callback, res) {
     var result;
     User.findOne(conditions, fields, options, function(err, obj){
@@ -86,11 +104,27 @@ userDao.prototype.update = function(conditions, set, callback, res, appendData) 
         }
     });
 }
+userDao.prototype.remove = function(conditions, callback, res) {
+    var result;
+    User.remove(conditions, function (error){
+        if(error) {
+           console.log(error);
+           callback(res, result);
+        } else {
+            console.log('active remove successfully');
+            var result = {
+                code : 1,
+                msg : '删除成功'
+            }
+            callback(res, result);
+        }
+    })
+}
 
 var $sql = {
 		insert : 'INSERT INTO user(account,password,whenIn) VALUES(?,?,?)',
 		update : 'UPDATE user SET password = ? WHERE account = ?',
-		delete : 'DELETE FROM user WHERE account = ? and password = ?',
+		delete : 'DELETE FROM user WHERE account = ?',
 		queryById : 'SELECT * FROM user WHERE account = ?',
 		queryAll : 'select * FROM user'
 };
@@ -395,5 +429,34 @@ module.exports = {
 
 					User.update(conditions, set, $util.jsonWrite, res, newName);
 		});
+	},
+	loadUser : function(req, res, next) {
+		console.log('[post]:load user call');
+		var request = req.body;
+		var conditions = request.conditions,
+				fields = request.fields,
+				options = request.options;
+		var User = new userDao();
+		User.find(conditions, fields, options, $util.jsonWrite, res);
+	},
+	removeUser : function (req, res, next) {
+		var param = req.body;
+		var db = new sqlite3.Database(DBname);
+		var result;
+		db.run($sql.delete, [param.account], function (err, row) {
+			if(err){
+					result = {
+						code : -100,
+						msg : '数据库错误'
+					}
+					$util.jsonWrite(res, result);
+					return;
+			} else {
+					debug ? console.log('[remove sqlite3]:执行INSERT') : console.log('');
+			}
+			db.close();
+		});
+		var User = new userDao();
+		User.remove(param.conditions, $util.jsonWrite, res);
 	}
 }

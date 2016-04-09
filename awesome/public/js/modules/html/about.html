@@ -108,7 +108,7 @@ body{background-color: #f5f5f5}
             </li>
             <li class="logoutHolder" ng-class="{'logoutShow' : logoutShow}">
                 <span class="userTitle">帐号注销<span class="fa fa-lg logOut" ng-class="{'fa-angle-down':!logoutShow,'fa-angle-up':logoutShow}"></span></span>
-                <div><a href="javascript:;" class="btn btn-block logout">退出登录</a></div>
+                <div><a href="javascript:;" class="btn btn-block logout" ng-click="logout()">退出登录</a></div>
                 <a href="javascript:;" ng-click="showLogout()" class="lobOutBtn"></a>
             </li>
         </ul>

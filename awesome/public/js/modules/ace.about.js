@@ -106,6 +106,11 @@ aceAbout.controller('aboutController',['$scope','$http','$rootScope', 'FileUploa
 					console.log(error);
 			})
   };
+	$scope.logout = function() {
+			console.log('logout call');
+			$.cookie('awId','');
+			location.reload();
+	}
 
 	var uploader = $scope.uploader = new FileUploader({
       url: '/users/updateUserImg'

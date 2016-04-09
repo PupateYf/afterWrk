@@ -15,9 +15,9 @@ suggestDAO.prototype.save = function(obj){
     var instance = new Suggest(obj);
     instance.save();
 }
-suggestDAO.prototype.find = function(conditions, callback, res) {
+suggestDAO.prototype.find = function(conditions, fields, options, callback, res) {
 	var result;
-	Suggest.find(conditions, function(err, obj){
+	Suggest.find(conditions, fields, options, function(err, obj){
 		if(err){
   			console.log(err);
   			callback(res, result);
@@ -35,5 +35,21 @@ suggestDAO.prototype.find = function(conditions, callback, res) {
 			}
 		}
 	})
+}
+suggestDAO.prototype.remove = function(conditions, callback, res) {
+    var result;
+    Suggest.remove(conditions, function (error) {
+        if(error) {
+           console.log(error);
+           callback(res, result);
+        } else {
+            console.log('remove successfully');
+            var result = {
+                code : 1,
+                msg : '删除成功'
+            }
+            callback(res, result);
+        }
+    })
 }
 module.exports = new suggestDAO();

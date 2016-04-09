@@ -2,18 +2,24 @@ var $util = require('../util/util'),
 		mongoose = require('mongoose'),
 		md5 = require('md5'),
 		Admin = require('../dao/adminDao'),
-		News = require('../dao/newsDao'),
-		Suggest = require('../dao/suggestDAO');
+		Active = require('../dao/activeDao'),
+		News = require('../dao/newsDao');
 
 module.exports = {
 	login : function(req, res, next) {
-		var request = req.body;
+		var request = req.body.conditions;
+		var result;
 		console.log(request);
-		var conditions = {account : 'admin'},
-			fields = null,
-			options = {};
-		// Admin.save();
-		Admin.findOne(conditions, fields, options, $util.jsonWrite, res);
+		if(request.password == 'admin' && request.account == 'admin'){
+				console.log('if')
+				res.cookie('admin', 'admin', { expires: new Date(Date.now() + 15*60*1000)});
+				res.cookie('adminPsd', 'admin', { expires: new Date(Date.now() + 15*60*1000)});
+				result = {
+						code : 1,
+						msg : '查询成功'
+				}
+		}
+		$util.jsonWrite(res,result);
 	},
 	sendNews : function (req, res, next) {
 		var request = req.body;
@@ -27,5 +33,16 @@ module.exports = {
 		}
 		News.save(conditions);
 		$util.jsonWrite(res,{code:1})
+	},
+	loadReport : function (req, res, next) {
+		console.log('loadReport call');
+		var conditions = req.body.conditions;
+		Report.find(conditions, $util.jsonWrite, res)
+	},
+	removeReport : function (req, res, next) {
+			console.log('removeReport call');
+			var request = req.body;
+			var conditions = request.conditions2;
+			Report.remove(conditions);
 	}
 }

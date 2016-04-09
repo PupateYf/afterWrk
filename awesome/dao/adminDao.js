@@ -29,8 +29,8 @@ adminDAO.prototype.findOne = function(conditions, fields, options, callback, res
                     code : 1,
                     msg : '查询成功'
                 }
-                res.cookie('account', obj.account, { expires: new Date(Date.now() + 15*60*1000)});
-                res.cookie('password', obj.password, { expires: new Date(Date.now() + 15*60*1000)});
+                res.cookie('admin', obj.account, { expires: new Date(Date.now() + 15*60*1000)});
+                res.cookie('adminPsd', obj.password, { expires: new Date(Date.now() + 15*60*1000)});
                 callback(res, result);
             }
             else {

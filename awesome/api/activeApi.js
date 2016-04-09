@@ -17,6 +17,7 @@ module.exports = {
     createActive : function (req, res, next) {
         // var account = '13580353945'; // for test
         var account = req.cookies.account;
+        var userImg = req.cookies.userImg;
         var param = req.body;
         var todoObj = {
                 account    : account,
@@ -30,7 +31,7 @@ module.exports = {
                 profile    : param.profile,
                 contacts   : param.contacts,
                 cost       : param.cost,
-                whoIn      : [account]
+                whoIn      : [userImg]
         }
         Active.save(todoObj, $util.jsonWrite, res);
     },
@@ -89,7 +90,7 @@ module.exports = {
             }
             //success
             //重命名
-            newName = fileName +'.'+extName,
+            newName = fileName,
             newPath = quene.uploadDir + newName;
             fs.renameSync(filePath, newPath);
             //写数据库
@@ -120,12 +121,19 @@ module.exports = {
         console.log('[POST]:reportActive call');
         var request = req.body;
         var account = req.cookies.account;
+        var topic = request.topic;
         var todoObj = {
             reportActid : request.reportActid,
             account : account,
+            topic : topic,
             time : new Date().getTime()
         }
         Report.save(todoObj);
         $util.jsonWrite(res, {code : 1});
+    },
+    removeActive : function (req, res, next) {
+        console.log('removeActive call');
+        var conditions = req.body.conditions;
+        Active.remove(conditions, $util.jsonWrite, res);
     }
 }

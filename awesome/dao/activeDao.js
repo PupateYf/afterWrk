@@ -72,5 +72,20 @@ activeDAO.prototype.update = function(conditions, set, callback, res) {
         }
     });
 }
-
+activeDAO.prototype.remove = function(conditions, callback, res) {
+    var result;
+    Active.remove(conditions, function (error){
+        if(error) {
+           console.log(error);
+           callback(res, result);
+        } else {
+            console.log('active remove successfully');
+            var result = {
+                code : 1,
+                msg : '删除成功'
+            }
+            callback(res, result);
+        }
+    })
+}
 module.exports = new activeDAO();

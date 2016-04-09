@@ -8,12 +8,12 @@ aceMessage.controller('messageController',['$scope','$http',function($scope, $ht
 	$scope.userImg;
 	$scope.skipNum = 0;
 	$scope.loading != 1;
+	$scope.successTip = !1;
 	$scope.initUserImg = function(){
 			$scope.userImg = $.cookie('userImg');
 	}
 
 	$scope.fnLoadActive = function (skipNum) {
-			$scope.userImg = '13580353945.png'
 			var data = {
 							conditions : {whoIn : $scope.userImg},
 							fields : null,
@@ -58,6 +58,8 @@ aceMessage.controller('messageController',['$scope','$http',function($scope, $ht
 					data : {content : $scope.contactContent}
 			}).then(function(response){
 					console.log('fnSubmitSuggest call successfully', response);
+					$scope.successTip = !0;
+					setTimeout(function(){$scope.successTip = !1;$scope.$apply()},1000);
 			},function(error){
 					console.log(error);
 			})
@@ -93,5 +95,6 @@ aceMessage.controller('messageController',['$scope','$http',function($scope, $ht
 			var lnglatXY = item.locationXY.split('-');
 			regeocoder(lnglatXY, item);
 	}
+
 
 }])

@@ -1,5 +1,4 @@
 <style>
-body{background-color:#f5f5f5}
 .active_banner{text-align: center;margin-top:.2rem}
 .active-upload-img{position: absolute;opacity: 0;width: 100%;height: 4.5rem;z-index: 999;}
 .active-add-img{display:block;color:#cacaca;position: relative;width:100%;height:4.5rem;border: .1rem dashed;border-radius: .3rem}
@@ -28,15 +27,22 @@ a.active-add-img:active,a.active-add-img:focus{color:#cacaca}
 .active_holder{height:.4rem;width:100%}
 .err_show{position: fixed;top: 50%;left: 50%;width: 50%;transform: translate(-50%,-50%);background: rgba(0,0,0,0.69);color: white;text-align: center;padding: .4rem;font-size: .36rem;border-radius: .2rem;z-index: 1000}
 </style>
-<section>  
+
+<div style="position: relative;margin-top:20px;left: 50%;transform: translate(-50%);text-align: center;">
+    <a class="btn btn-success" href="#/manageActive">管理活动</a>
+    <a class="btn btn-warning" href="#/manageUser">管理用户</a>
+    <a class="btn btn-info" href="#/manageSuggest">反馈</a>
+    <a class="btn btn-info" href="#/sendNews">发布资讯</a>
+    <a class="btn btn-danger" href="#/manageReport">被举报的活动</a>
+</div>
+
+<section class="col-md-8" style="left:50%;transform:translate(-50%);margin-top:50px">
+
+        <input type="text" class="form-control" ng-model="Cont2Send.title" placeholder="内容标题"/>
+        <textarea style="resize:none;margin-top:15px" class="form-control" ng-model="Cont2Send.content" rows="10" placeholder="内容详情"></textarea>
 
 
-        <span class="title">内容</span>
-        <input type="text" ng-model="Cont2Send.title" placeholder="内容标题"/>
-        <textarea style="resize:none" class="form-control" ng-model="Cont2Send.content" rows="10" placeholder="内容详情"></textarea>
-
-
-        <button href="javascript:;" class="btn btn-block btn-success" ng-click="sendNews()">发 布</button>
+        <button href="javascript:;" style="margin-top:15px" class="btn btn-primary btn-block" ng-click="sendNews()">马上发布</button>
     </div>
 
 </section>

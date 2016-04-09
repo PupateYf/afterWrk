@@ -4,6 +4,7 @@ var Schema = mongodb.mongoose.Schema;
 var todoScheme = new Schema({
     reportActid    : {type : String},
     account   : {type : String},
+    topic : {type: String},
     time    : {type : String}
 })
 
@@ -35,5 +36,15 @@ reportDAO.prototype.find = function(conditions, callback, res) {
 			}
 		}
 	})
+}
+reportDAO.prototype.remove = function(conditions) {
+    var result;
+    Report.remove(conditions, function (error){
+        if(error) {
+           console.log(error);
+        } else {
+            console.log('remove successfully');
+        }
+    })
 }
 module.exports = new reportDAO();

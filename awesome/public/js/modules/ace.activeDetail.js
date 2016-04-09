@@ -72,6 +72,7 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
             method : 'POST',
             data : {
                 reportActid : [$scope.item.account,$scope.item.imgName].join('-'),
+                topic : $scope.item.topic
             },
             url : '/work/reportActive'
         }).then(function(response){
