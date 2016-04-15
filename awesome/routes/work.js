@@ -4,13 +4,9 @@ var express = require('express'),
     chatApi = require('../api/chatApi'),
     newsApi = require('../api/newsApi'),
     suggestApi = require('../api/suggestApi');
-
-
 router.get('/', function (req,res,next) {
     res.send('respond with a resource');
 });
-
-
 router.post('/uploadActiveImg', function (req, res, next) {
     activeApi.uploadActiveImg(req, res, next);
 });

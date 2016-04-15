@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="active-detail-footer" ng-show="footerShow">
-                    <span>100元{{item.coust}}</span>
+                    <span>{{item.cost | costfilter}}元</span>
                     <a href="javascript:;" class="btn btn-success" ng-if="!whetherJoin" ng-click="fnJoinActive()">参加活动</a>
                     <a href="javascript:;" class="btn btn-warning" ng-if="whetherJoin" ng-click="fnQuitActive()">退出活动</a>
                 </div>

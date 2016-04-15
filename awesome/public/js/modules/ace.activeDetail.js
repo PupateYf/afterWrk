@@ -86,3 +86,10 @@ aceActDetail.controller('actDetailController', ['$scope', '$http', function ($sc
     }
 
 }])
+aceActDetail.filter('costfilter', function(){
+    return function(e){
+        console.log('costFilter',e);
+        var str = e.split('-')[0];
+        return str;
+    }
+})

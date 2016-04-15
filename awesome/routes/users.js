@@ -1,13 +1,10 @@
 var express = require('express'),
-	router = express.Router(),
-	userDao = require('../dao/userDao');
+		router = express.Router(),
+		userDao = require('../dao/userDao');
 /* GET users listing. */
-
-var debug = true;
 router.get('/', function (req, res, next) {
 	res.send('respond with a resource');
 });
-
 
 router.post('/login', function (req, res, next) {
 	console.log('[login:]call');
