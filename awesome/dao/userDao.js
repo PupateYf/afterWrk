@@ -11,6 +11,7 @@ var	sqlite3 = require('sqlite3').verbose(),
 		Alidayu = require('alidayujs'),
 		formidable = require('formidable'),
 		UPLOAD_DIR = 'public/upload/user/',
+		fs = require('fs'),
 		md5 = require('md5');
 
 var mongodb = require('../DB/DBinit');

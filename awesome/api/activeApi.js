@@ -7,8 +7,8 @@
 
 var	$util = require('../util/util'),
     formidable = require('formidable'),
-    mongoose = require('mongoose');
- 		md5 = require('md5'),
+    mongoose = require('mongoose'),
+ 	md5 = require('md5'),
     fs = require('fs'),
     UPLOAD_DIR = 'public/upload/activeBanner/',
     Active = require('../dao/activeDao'),
