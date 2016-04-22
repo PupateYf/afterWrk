@@ -98,7 +98,6 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
   $scope.isOk = 0;
   $scope.errorMsg = '';
   $scope.fnSubimt = function () {
-    $scope.loading = true;
     console.log($scope.rawActiveData.topic);
     $.extend($scope.finalActiveData,{
       topic: $scope.rawActiveData.topic,
@@ -112,6 +111,7 @@ aceCreateActive.controller('activeController', ['$scope', 'FileUploader', '$http
     $scope.fnCheckForm();
     if(!$scope.permission) return;
     // 图片上传
+    $scope.loading = true;
     uploader.uploadAll();
     // 数据提交
     $http({url: '/work/createActive', data: $scope.finalActiveData, method: 'POST'})
