@@ -40,6 +40,7 @@ userDao.prototype.save = function(obj, callback, res) {
             console.log('save successfully');
             var result = {
                 code : 1,
+                data : obj,
                 msg : '录入成功'
             }
             res.cookie('userName', obj.userName, { expires: new Date(Date.now() + 15*60*1000)});
@@ -240,7 +241,7 @@ module.exports = {
 	 			if(!!row) {
 	 				// 查询有返回
 	 				debug ? console.log('[checkLogin sqlite3]:',row) : console.log('');
-	 				if (row.whenIn === param.awId) {
+	 				if (parseInt(row.whenIn) === parseInt(param.awId)) {
 	 					// 密码正确
 	 					result = {
 	 						code : 1,
@@ -300,6 +301,7 @@ module.exports = {
 				};
 				var alidayu = new Alidayu(config);
 				var ramdonCode = $util.createRamdon();
+				console.log('注册验证码是',ramdonCode);
 				var options = {
 						sms_free_sign_name: '注册验证',
 						sms_param: {

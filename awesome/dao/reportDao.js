@@ -16,9 +16,9 @@ reportDAO.prototype.save = function(obj){
     var instance = new Report(obj);
     instance.save();
 }
-reportDAO.prototype.find = function(conditions, callback, res) {
+reportDAO.prototype.find = function(conditions, fields, options, callback, res) {
 	var result;
-	Report.find(conditions, function(err, obj){
+	Report.find(conditions, fields, options, function(err, obj){
 		if(err){
 			console.log(err);
 			callback(res, result);
@@ -37,13 +37,13 @@ reportDAO.prototype.find = function(conditions, callback, res) {
 		}
 	})
 }
-reportDAO.prototype.remove = function(conditions) {
+reportDAO.prototype.remove = function(conditions, callback, res) {
     var result;
     Report.remove(conditions, function (error){
         if(error) {
            console.log(error);
         } else {
-            console.log('remove successfully');
+            console.log('remove report successfully');
         }
     })
 }

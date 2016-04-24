@@ -361,6 +361,7 @@ admin.controller('manageReportCtr', ['$scope', '$http', function($scope, $http){
 					method : method,
 					data : data
 			}).then(function(response){
+					console.log('log report',response);
 					switch (response.data.code) {
 							case 1:{
 									//请求成功，处理数据以供展示

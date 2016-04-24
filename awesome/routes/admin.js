@@ -22,10 +22,10 @@ router.post('/loadSuggest', function (req, res, next) {
   suggestApi.loadSuggest(req, res, next);
 })
 router.post('/loadReport', function (req, res, next) {
-  adminApi.loadReport(req, res, next);
+  activeApi.loadReport(req, res, next);
 })
 router.post('/removeReport', function (req, res, next) {
-  adminApi.removeReport(req, res, next);
+  activeApi.removeReport(req);
   activeApi.removeActive(req, res, next);
 })
 

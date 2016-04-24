@@ -33,16 +33,5 @@ module.exports = {
 		}
 		News.save(conditions);
 		$util.jsonWrite(res,{code:1})
-	},
-	loadReport : function (req, res, next) {
-		console.log('loadReport call');
-		var conditions = req.body.conditions;
-		Report.find(conditions, $util.jsonWrite, res)
-	},
-	removeReport : function (req, res, next) {
-			console.log('removeReport call');
-			var request = req.body;
-			var conditions = request.conditions2;
-			Report.remove(conditions);
 	}
 }

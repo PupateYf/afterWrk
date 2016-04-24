@@ -13,6 +13,7 @@ var	$util = require('../util/util'),
     UPLOAD_DIR = 'public/upload/activeBanner/',
     Active = require('../dao/activeDao'),
     Report = require('../dao/reportDAO');
+
 module.exports = {
     createActive : function (req, res, next) {
         // var account = '13580353945'; // for test
@@ -130,6 +131,22 @@ module.exports = {
         }
         Report.save(todoObj);
         $util.jsonWrite(res, {code : 1});
+    },
+    loadReport : function (req, res, next) {
+        console.log('loadReport call');
+        var requrest = req.body;
+        var conditions = requrest.conditions,
+            fields = requrest.fields,
+            options = requrest.options;
+        console.log('conditions is',conditions);
+        Report.find(conditions, fields, options, $util.jsonWrite, res);
+    },
+    removeReport : function (req, res, next) {
+            console.log('removeReport call');
+            var request = req.body;
+            var conditions = request.conditions2;
+            console.log('removeReport request',request.conditions2)
+            Report.remove(conditions);
     },
     removeActive : function (req, res, next) {
         console.log('removeActive call');

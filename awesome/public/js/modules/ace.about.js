@@ -100,6 +100,13 @@ aceAbout.controller('aboutController',['$scope','$http','$rootScope', 'FileUploa
 					}
 			}).then(function(response){
 					console.log('updateUserDetail',response);
+          $.extend($rootScope.USERDATA,{
+              userName : $scope.aboutEditUserName,
+              gender : $scope.aboutEditGender,
+              birthday : new Date($scope.aboutEditBirthday).getTime(),
+              description : $scope.aboutEditDescription
+          });
+          $scope.formatData($scope.aboutContent);
 					$scope.loading = false;
 					$scope.edit = false;
 			},function(error){
